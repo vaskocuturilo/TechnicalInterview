@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TechnicalInterviewEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long taskId;
