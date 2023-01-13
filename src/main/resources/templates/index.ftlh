@@ -48,7 +48,6 @@
         <td>Description</td>
         <td>Completed</td>
         <td>Delete from list</td>
-        <td>Complete</td>
     </tr>
     <#list entityList as task>
     <tr>
@@ -57,9 +56,22 @@
         <td>${task.description}</td>
         <td>${task.completed?string("Yes","No")}</td>
         <td><a href="${'/delete/'+task.taskId}"">Delete</a></td>
-         <td><a href="${'/complete/'+task.taskId}"">Complete</a></td>
     </tr>
     </#list>
+</table>
+<br>
+<br>
+<br>
+<form action="/random" method="get">
+    <table border="1px">
+        <tr>
+            <td>
+                <input type="submit" value="Random">
+            </td>
+        </tr>
+    </table>
+</form>
+<h2>The technical interview question is -> ${randomTechnicalInterviewQuestion!""}</h2>
 </table>
 </body>
 </html>
