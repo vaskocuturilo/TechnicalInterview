@@ -28,7 +28,11 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.14.1'
+
+	//testing
 	testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.24.1'
+	implementation group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '5.3.1'
+	implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.7.2'
 }
 
 tasks.named('test') {
