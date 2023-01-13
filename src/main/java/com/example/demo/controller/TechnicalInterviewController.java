@@ -3,22 +3,16 @@ package com.example.demo.controller;
 import com.example.demo.entity.TechnicalInterviewEntity;
 import com.example.demo.service.TechnicalInterviewService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class TechnicalInterviewController {
     @Autowired
     TechnicalInterviewService technicalInterviewService;
-
 
     @GetMapping("/")
     public String getAllTechnicalInterviewTasks(Model model) {
