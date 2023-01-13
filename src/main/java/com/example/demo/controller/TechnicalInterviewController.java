@@ -29,6 +29,14 @@ public class TechnicalInterviewController {
         return "index";
     }
 
+    @GetMapping("/random")
+    public String getRandomTechnicalInterviewTask(Model model) {
+        TechnicalInterviewEntity randomTechnicalInterviewQuestion = technicalInterviewService.getRandomQuestion();
+        model.addAttribute("randomTechnicalInterviewQuestion", randomTechnicalInterviewQuestion);
+
+        return "redirect:/";
+    }
+
 
     @RequestMapping("/delete/{id}")
     public String deleteTechnicalInterviewTask(@PathVariable Long id) {
@@ -50,6 +58,7 @@ public class TechnicalInterviewController {
 
         return "redirect:/";
     }
+
     @PostMapping(path = "/upload", consumes = "application/x-www-form-urlencoded")
     public String uploadTechnicalInterviewTasks(TechnicalInterviewEntity technicalInterviewEntity) {
 
