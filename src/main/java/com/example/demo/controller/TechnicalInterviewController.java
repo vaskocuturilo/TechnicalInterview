@@ -6,13 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
 @Controller
 public class TechnicalInterviewController {
+    final TechnicalInterviewService technicalInterviewService;
+
     @Autowired
-    TechnicalInterviewService technicalInterviewService;
+    public TechnicalInterviewController(TechnicalInterviewService technicalInterviewService) {
+        this.technicalInterviewService = technicalInterviewService;
+    }
 
     @GetMapping("/")
     public String getAllTechnicalInterviewTasks(Model model) {
@@ -53,9 +59,9 @@ public class TechnicalInterviewController {
         return "redirect:/";
     }
 
-    @PostMapping(path = "/uploadFile", consumes = "application/x-www-form-urlencoded")
-    public String uploadTechnicalInterviewTasks(TechnicalInterviewEntity technicalInterviewEntity) {
-
+    @PostMapping("/upload")
+    public String handleFileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("message", "Sadly, this functionality doesn't work, now.");
         return "redirect:/";
     }
 }
