@@ -38,21 +38,21 @@ public class TechnicalInterviewController {
     }
 
 
-    @DeleteMapping("/tasks/{id}")
+    @RequestMapping(value = "/delete/{id}")
     public String deleteTechnicalInterviewTask(@PathVariable Long id) {
         technicalInterviewService.deleteTechnicalInterviewTask(id);
 
         return "redirect:/";
     }
 
-    @GetMapping("/tasks/{id}")
+    @RequestMapping(value = "/complete/{id}")
     public String completeTechnicalInterviewTask(@PathVariable Long id) {
         technicalInterviewService.completeTechnicalInterviewTask(true, id);
 
         return "redirect:/";
     }
 
-    @PostMapping("/tasks")
+    @PostMapping(value = "/add")
     public String addNewTechnicalInterviewTask(@ModelAttribute TechnicalInterviewEntity technicalInterviewEntity) {
         technicalInterviewService.saveTechnicalInterviewTask(technicalInterviewEntity);
 
