@@ -24,8 +24,14 @@ jobs:
       - name: Create gradle wrapper.
         run: gradle wrapper
 
-      - name: Run project.
+      - name: Clean project.
+        run: ./gradlew clean
+
+      - name: Build project.
+        run: ./gradlew build
+
+      - name: Run spring boot project.
         run: ./gradlew bootRun
 
       - name: Run UI, API, unit tests.
-        run: gradle test
+        run: ./gradlew test
