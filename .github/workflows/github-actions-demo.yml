@@ -28,5 +28,8 @@ jobs:
       - name: Build project.
         run: gradle build -x test
 
-      - name: Build project.
-        run: gradle build -x test
+      - name: Run spring boot application.
+        run: gradle bootRun
+
+      - name: Run ui, api and unit tests.
+        run: gradle bootRun
