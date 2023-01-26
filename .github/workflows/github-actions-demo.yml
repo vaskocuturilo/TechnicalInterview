@@ -21,6 +21,9 @@ jobs:
       - name: Gradle init.
         run: gradle init
 
+      - name: Create gradle wrapper.
+        run: gradle wrapper
+
       - name: Run project.
         run: gradle bootRun
 
