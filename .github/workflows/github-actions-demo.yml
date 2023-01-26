@@ -26,6 +26,3 @@ jobs:
 
       - name: Build project.
         run: ./gradlew build
-
-      - name: Run UI, API and Unit tests.
-        run: ./gradlew test
