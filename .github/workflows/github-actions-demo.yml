@@ -19,7 +19,7 @@ jobs:
           java-version: '11'
 
       - name: Run project
-        run: ./gradle bootRun
+        run: gradle bootRun
 
       - name: Run UI, API, unit tests
-        run: ./gradle test
+        run: gradle test
