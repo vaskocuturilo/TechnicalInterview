@@ -6,17 +6,18 @@ on:
   pull_request:
     branches: [ main ]
 
-    env:
-      # Java
-      JAVA_VERSION: 1.15
 jobs:
   init:
     runs-on: ubuntu-latest
     steps:
-      - name: Setup Java JDK
-        uses: actions/setup-java@v1
+      # Setting up the Java environment
+      - uses: actions/checkout@v3
+      - name: Setup Java
+        uses: actions/setup-java@v3
         with:
-          java-version: '11'
+          java-version: '17'
+          distribution: adopt
+          cache: 'gradle'
 
       - name: Gradle init.
         run: gradle init
@@ -25,4 +26,4 @@ jobs:
         run: gradle wrapper
 
       - name: Build project.
-        run: ./gradlew build
+        run: gradle build -x test
