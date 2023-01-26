@@ -30,6 +30,7 @@ public class TechnicalInterviewService {
 
     public TechnicalInterviewEntity saveTechnicalInterviewTask(TechnicalInterviewEntity technicalInterviewEntity) {
         return technicalInterviewRepository.save(technicalInterviewEntity);
+        1
     }
 
     public void deleteTechnicalInterviewTask(final Long id) {
