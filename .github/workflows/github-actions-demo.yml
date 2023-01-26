@@ -18,8 +18,11 @@ jobs:
         with:
           java-version: '11'
 
-      - name: Run project
+      - name: Gradle init.
+        run: gradle init
+
+      - name: Run project.
         run: gradle bootRun
 
-      - name: Run UI, API, unit tests
+      - name: Run UI, API, unit tests.
         run: gradle test
