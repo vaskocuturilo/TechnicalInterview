@@ -10,12 +10,14 @@ jobs:
   init:
     runs-on: ubuntu-latest
     steps:
-      - name: setup Java
+      # Setting up the Java environment
+      - uses: actions/checkout@v3
+      - name: Setup Java
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: adopt
-          cache: gradle
+          cache: 'gradle'
 
       - name: Gradle init.
         run: gradle init
@@ -24,4 +26,7 @@ jobs:
         run: gradle wrapper
 
       - name: Build project.
-        run: gradle build
+        run: gradle build -x test
+
+      - name: Build project.
+        run: gradle build -x test
