@@ -26,6 +26,8 @@
     </table>
 </form>
 <br>
+<br>
+<h2>Upload the file with technical interview questions:</h2>
 <form action="/upload" method="POST">
     <table border="1px">
         <tr>
@@ -38,7 +40,11 @@
         </tr>
     </table>
 </form>
-
+<br>
+<h2>Reset all completed technical interview questions:</h2>
+<form action="/reset" method="GET">
+    <input type="submit" value="Reset">
+</form>
 <br>
 <h2>Technical interview questions: (questions count : ${entityListSize})</h2>
 <table border="1px">
@@ -66,6 +72,7 @@
 <br>
 <br>
 <br>
+<h2>The technical interview question is -> ${randomTechnicalInterviewQuestion!""}</h2>
 <form action="/randomTask" method="GET">
     <table border="1px">
         <tr>
@@ -75,7 +82,6 @@
         </tr>
     </table>
 </form>
-<h2>The technical interview question is -> ${randomTechnicalInterviewQuestion!""}</h2>
 </table>
 </body>
 </html>

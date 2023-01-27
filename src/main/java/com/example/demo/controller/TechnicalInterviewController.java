@@ -62,4 +62,10 @@ public class TechnicalInterviewController {
 
         return "errors";
     }
+
+    @RequestMapping("/reset")
+    public String resetAllCompletedTechnicalInterviewTasks() {
+        technicalInterviewService.resetAllCompletedTechnicalInterviewTasks();
+        return "redirect:/";
+    }
 }
