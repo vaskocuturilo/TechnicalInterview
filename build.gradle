@@ -29,22 +29,26 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.14.1'
 
-    //ui-testing
+    //ui-testing dependencies
     testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.24.1'
     implementation group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '5.3.1'
     implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.7.2'
     testImplementation group: 'org.hamcrest', name: 'hamcrest-all', version: '1.3'
 
-    //api testing
+    //api testing dependencies
     testImplementation group: 'io.rest-assured', name: 'rest-assured', version: '5.3.0'
     testImplementation group: 'io.rest-assured', name: 'json-path', version: '5.3.0'
     testImplementation group: 'io.rest-assured', name: 'json-schema-validator', version: '5.3.0'
     testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.24.2'
 
 
-    //Health Check
+    //Performance monitor dependencies
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '3.0.2'
 
+    //front end dependencies
+    implementation group: 'org.webjars', name: 'jquery', version: '3.6.3'
+    implementation group: 'org.webjars', name: 'bootstrap', version: '5.2.3'
+    implementation group: 'org.webjars', name: 'webjars-locator-core', version: '0.52'
 }
 
 tasks.named('test') {
