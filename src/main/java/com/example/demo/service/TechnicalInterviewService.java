@@ -7,6 +7,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -20,24 +21,33 @@ public class TechnicalInterviewService {
     TechnicalInterviewRepository technicalInterviewRepository;
 
 
+    @Transactional
     public List<TechnicalInterviewEntity> getAllTechnicalInterviewTasks() {
         return technicalInterviewRepository.findAll();
     }
 
+    @Transactional
     public TechnicalInterviewEntity getRandomQuestion() {
-      return technicalInterviewRepository.findQuestion();
+        return technicalInterviewRepository.findQuestion();
     }
 
+    @Transactional
     public TechnicalInterviewEntity saveTechnicalInterviewTask(TechnicalInterviewEntity technicalInterviewEntity) {
         return technicalInterviewRepository.save(technicalInterviewEntity);
     }
-
+    @Transactional
     public void deleteTechnicalInterviewTask(final Long id) {
         technicalInterviewRepository.deleteById(id);
     }
 
+    @Transactional
     public void completeTechnicalInterviewTask(final boolean completed, final Long id) {
         technicalInterviewRepository.setCompletedStatus(completed, id);
+    }
+
+    @Transactional
+    public void resetAllCompletedTechnicalInterviewTasks() {
+        technicalInterviewRepository.resetAllCompleted();
     }
 
     public TechnicalInterviewEntity uploadTechnicalInterviewTasks(String technicalInterviewTasks) throws IOException {
