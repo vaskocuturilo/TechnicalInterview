@@ -46,7 +46,7 @@ public class TechnicalInterviewController {
     @RequestMapping(value = "/complete/{id}")
     public String completeTechnicalInterviewTask(@PathVariable Long id) {
         technicalInterviewService.completeTechnicalInterviewTask(true, id);
-
+        1
         return "redirect:/";
     }
 
