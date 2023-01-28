@@ -12,15 +12,6 @@ jobs:
       matrix:
         os: [ ubuntu-latest ]
     runs-on: ${{ matrix.os }}
-    steps:
-      # Install the Java.
-      - uses: actions/checkout@v3
-      - name: Setup Java
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: adopt
-          cache: 'gradle'
 
     services:
       mysql:
@@ -32,18 +23,27 @@ jobs:
         - '8888:3306'
       options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
-      steps:
-        - uses: actions/checkout@v1
-        - run: mysql -h 127.0.0.1 --port 8888 -u root -p password -e 'CREATE DATABASE IF NOT EXISTS technical_interview;'
-        # Setting up the Gradle.
-        - name: Setup Gradle
-          uses: gradle/gradle-build-action@v2
+    steps:
+      # Install the Java.
+      - uses: actions/checkout@v3
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: adopt
+          cache: 'gradle'
 
-        - name: Execute Gradle bootRun
-          run: ./gradlew bootRun
+      - uses: actions/checkout@v1
+      - run: mysql -h 127.0.0.1 --port 8888 -u root -p password -e 'CREATE DATABASE IF NOT EXISTS technical_interview;'
+        # Setting up the Gradle.
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+
+      - name: Execute Gradle bootRun
+        run: ./gradlew bootRun
 
         # Run the Unit, API, UI tests.
-        - name: Setup and execute Gradle 'test' task
-          uses: gradle/gradle-build-action@v2
-          with:
-            arguments: test
+      - name: Setup and execute Gradle 'test' task
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: test
