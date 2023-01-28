@@ -47,11 +47,9 @@ jobs:
           distribution: adopt
           cache: 'gradle'
 
-      - name: Execute Gradle bootRun
-        run: ./gradlew bootRun
+      - name: Execute Gradle bootRun in the background.
+        run: nohup ./gradlew bootrun >application.log 2>&1 &
 
         # Run the Unit, API, UI tests.
       - name: Setup and execute Gradle 'test' task
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: test
+        run: ./gradlew test
