@@ -47,6 +47,8 @@ jobs:
           distribution: adopt
           cache: 'gradle'
 
+      - uses: browser-actions/setup-chrome@v1
+
       - name: Execute Gradle bootRun in the background.
         run: nohup ./gradlew bootrun >application.log 2>&1 &
 
