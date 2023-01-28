@@ -33,6 +33,10 @@ jobs:
           --health-retries=3
 
     steps:
+      # Check Mysql Server.
+      - uses: actions/checkout@v1
+      - run: mysql -h 127.0.0.1 --port 33306 -u root -p -e 'CREATE DATABASE IF NOT EXISTS technical_interview;'
+
       # Install the Java.
       - uses: actions/checkout@v3
       - name: Setup Java
@@ -42,8 +46,6 @@ jobs:
           distribution: adopt
           cache: 'gradle'
 
-      - uses: actions/checkout@v1
-      - run: mysql -h 127.0.0.1 --port 33306 -u root -p root -e 'CREATE DATABASE IF NOT EXISTS technical_interview;'
         # Setting up the Gradle.
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
