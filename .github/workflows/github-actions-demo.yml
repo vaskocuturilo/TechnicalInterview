@@ -42,7 +42,7 @@ jobs:
           --health-retries=3
 
       selenium:
-        image: selenium/standalone-${{ github.event.inputs.browser }}
+        image: selenium/standalone-chrome
 
     steps:
       # Check Mysql Server.
