@@ -7,10 +7,13 @@ on:
     branches: [ main ]
 
 jobs:
-  init:
-    runs-on: ubuntu-latest
+  gradle:
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+    runs-on: ${{ matrix.os }}
     steps:
-      # Setting up the Java environment
+      # Install the Java.
       - uses: actions/checkout@v3
       - name: Setup Java
         uses: actions/setup-java@v3
@@ -19,11 +22,28 @@ jobs:
           distribution: adopt
           cache: 'gradle'
 
-      - name: Gradle init.
-        run: gradle init
+      # Setting up the MySQL.
+      - uses: actions/checkout@v1
+      - name: Shutdown Ubuntu MySQL (SUDO)
+        run: sudo service mysql stop
 
-      - name: Create gradle wrapper.
-        run: gradle wrapper
+      - name: Set up MySQL 5.7
+        uses: mirromutth/mysql-action@master
+        with:
+          mysql version: 5.7
+          mysql database: test
+          mysql root password: ${{ secrets.DatabasePassword }}
 
-      - name: Build project.
-        run: gradle build -x test
+      # Setting up the Gradle.
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+
+      - name: Execute Gradle build
+        run: ./gradlew build
+
+      # Run the Unit, API, UI tests.
+      - name: Setup and execute Gradle 'test' task
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: test
+
