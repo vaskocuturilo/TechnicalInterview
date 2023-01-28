@@ -33,15 +33,15 @@ jobs:
           mysql version: '8.0' # Optional, default value is "latest". The version of the MySQL
           mysql database: 'technical_interview' # Optional, default value is "test".
           mysql root password: 'root' # Required if "mysql user" is empty, default is empty. The root superuser password
-          mysql user: 'developer' # Required if "mysql root password" is empty, default is empty. The superuser for the specified database. Can use secrets, too
-          mysql password: 'root' # Required if "mysql user" exists. The password for the "mysql user"
-
       # Setting up the Gradle.
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
       - name: Execute Gradle build
         run: ./gradlew build
+
+      - name: Execute Gradle build
+        run: ./gradlew bootRun
 
       # Run the Unit, API, UI tests.
       - name: Setup and execute Gradle 'test' task
