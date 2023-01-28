@@ -21,6 +21,7 @@ jobs:
         env:
           ## Accessing to Github secrets, where you can store your configuration
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_ROOT_PASSWORD: ${{ secrets.DB_PASSWORD }}
           MYSQL_DATABASE: technical_interview
         ## map the "external" 33306 port with the "internal" 3306
         ports:
@@ -35,7 +36,7 @@ jobs:
     steps:
       # Check Mysql Server.
       - uses: actions/checkout@v1
-      - run: mysql -h 127.0.0.1 --port 33306 -u root -p -e 'CREATE DATABASE IF NOT EXISTS technical_interview;'
+      - run: mysql -h 127.0.0.1 --port 33306 -u root -p root -e 'CREATE DATABASE IF NOT EXISTS technical_interview;'
 
       # Install the Java.
       - uses: actions/checkout@v3
