@@ -35,6 +35,7 @@ jobs:
     steps:
       # Check Mysql Server.
       - uses: actions/checkout@v1
+      - run: mysql -e "SET PASSWORD = '${{ secrets.DB_PASSWORD }}';"
       - run: mysql -h 127.0.0.1 --port 33306 -u root -p -e 'CREATE DATABASE IF NOT EXISTS technical_interview;'
 
       # Install the Java.
