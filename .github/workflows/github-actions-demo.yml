@@ -43,12 +43,18 @@ jobs:
           cache: 'gradle'
 
       - uses: actions/checkout@v1
-      - run: mysql -h 127.0.0.1 --port 3306 -u root -p password -e 'CREATE DATABASE IF NOT EXISTS technical_interview;'
+      - run: mysql -h 127.0.0.1 --port 33306 -u root -p password -e 'CREATE DATABASE IF NOT EXISTS technical_interview;'
         # Setting up the Gradle.
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
       - name: Execute Gradle bootRun
+        env:
+          DB_CONNECTION: mysql
+          DB_DATABASE: technical_interview
+          DB_PORT: 33306
+          DB_USER: root
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: ./gradlew bootRun
 
         # Run the Unit, API, UI tests.
