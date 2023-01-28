@@ -58,7 +58,10 @@ jobs:
           distribution: adopt
           cache: 'gradle'
 
-      - uses: browser-actions/setup-chrome@v1
+      - uses: nanasess/setup-chromedriver@v1
+        with:
+          # Optional: do not specify to match Chrome's version
+          chromedriver-version: '112.0.5566.0'
 
       - name: Execute Gradle bootRun in the background.
         run: nohup ./gradlew bootrun >application.log 2>&1 &
