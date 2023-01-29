@@ -15,11 +15,15 @@
         <tr>
             <td>
                 <label id="task_name_label">Task name: </label>
-                <input type="text" id="task_name_input" name="taskName">
+                <input type="text" id="task_name_input" name="taskName" required minlength="1" maxlength="255">
             </td>
             <td>
                 <label id="description_label">Description:</label>
-                <input type="text" id="description_input" name="description">
+                <input type="text" id="description_input" name="description" required minlength="1" maxlength="255">
+            </td>
+            <td>
+                <label id="complete_label">Complete:</label>
+                <input type="checkbox" id="complete_checkbox" name="complete_checkbox" disabled>
             </td>
             <td>
                 <input type="submit" id="add_task_button" value="Add task">

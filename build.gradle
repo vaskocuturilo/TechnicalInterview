@@ -28,6 +28,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.14.1'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '3.0.1'
 
     //ui-testing dependencies
     testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.24.1'
