@@ -39,7 +39,7 @@ public class SimpleUITest {
     public void setUpDriver() {
         webDriver = new ChromeDriver();
         webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(DELAY));
-        webDriver.get("http://localhost:8080/");
+        webDriver.get("http://127.0.0.1:8080/");
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(MAIN_PAGE_LINK_QUESTIONS)).click();
     }
 
