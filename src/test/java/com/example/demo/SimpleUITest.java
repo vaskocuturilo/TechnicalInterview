@@ -25,10 +25,10 @@ public class SimpleUITest {
     private static By DELETE_BUTTON = By.xpath("//a[contains(text(),'Delete')]");
     private static By TABLE = By.xpath("//td[contains(text(), 'Delete from list')]");
 
+    private static By MAIN_PAGE_LINK_QUESTIONS = By.xpath("//a[@id='list_questions_link']");
     private static By TABLE_TITLE = By.xpath("//h2[contains(text(),'Technical interview questions')]");
 
     private static final String TEXT = "Technical interview questions: (questions count : %s)";
-
 
     @BeforeAll
     public static void setUp() {
@@ -38,12 +38,14 @@ public class SimpleUITest {
     @BeforeEach
     public void setUpDriver() {
         webDriver = new ChromeDriver();
+        webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(DELAY));
         webDriver.get("http://localhost:8080/");
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(MAIN_PAGE_LINK_QUESTIONS)).click();
     }
 
     @Test
     public void testVerifyTitle() {
-        assertThat(webDriver.getTitle()).isEqualTo("Technical interview questions.");
+        assertThat(webDriver.getTitle()).isEqualTo("Technical interview questions");
     }
 
     @Test
@@ -69,7 +71,8 @@ public class SimpleUITest {
     @Test
     public void testDeleteElementFormTable() {
         webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(DELAY));
-        assertThat(webDriver.getTitle()).isEqualTo("Technical interview questions.");
+        assertThat(webDriver.getTitle()).isEqualTo("Technical interview questions");
+
         assertThat(webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(TABLE)).isDisplayed());
 
         assertThat(webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(TABLE_TITLE)).getText()).isEqualTo(String.format(TEXT, "1"));
@@ -82,7 +85,7 @@ public class SimpleUITest {
     @AfterAll
     public static void tearDown() {
         if (webDriver != null) {
-            webDriver.close();
+            webDriver.quit();
         }
     }
 }

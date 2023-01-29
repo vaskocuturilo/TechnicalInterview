@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Technical interview questions.</title>
+    <title>Technical interview questions</title>
     <link rel="stylesheet" type="text/css" href="/css/style.x47307.css"/>
 </head>
 <body>

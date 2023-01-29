@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.example.demo.model.health;
 
 public class HealthCheck {
 	private String status;

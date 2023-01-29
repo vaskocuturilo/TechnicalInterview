@@ -3,16 +3,12 @@ package com.example.demo.service;
 import com.example.demo.entity.TechnicalInterviewEntity;
 import com.example.demo.repository.TechnicalInterviewRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Random;
 
 @Service
 public class TechnicalInterviewService {
