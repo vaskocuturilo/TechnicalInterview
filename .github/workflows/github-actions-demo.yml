@@ -18,7 +18,7 @@ jobs:
   gradle:
     strategy:
       matrix:
-        os: [ ubuntu-latest ]
+        os: [ windows-latest ]
     runs-on: ${{ matrix.os }}
 
     services:
