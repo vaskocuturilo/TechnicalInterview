@@ -18,7 +18,7 @@ jobs:
   gradle:
     strategy:
       matrix:
-        os: [ windows-latest ]
+        os: [ ubuntu-latest ]
     runs-on: ${{ matrix.os }}
 
     services:
@@ -56,11 +56,6 @@ jobs:
           java-version: '17'
           distribution: adopt
           cache: 'gradle'
-
-      - name: Install Google Chrome
-        run: |
-          chmod +x ./script/InstallChrome.sh
-           ./script/InstallChrome.sh
 
       - uses: nanasess/setup-chromedriver@v1
       - run: |
