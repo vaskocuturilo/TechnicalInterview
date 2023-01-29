@@ -27,7 +27,6 @@ jobs:
         # Docker Hub image (also with version)
         image: mysql:5.7
         env:
-          ## Accessing to Github secrets, where you can store your configuration
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_ROOT_PASSWORD: ${{ secrets.DB_PASSWORD }}
           MYSQL_DATABASE: technical_interview
@@ -57,6 +56,11 @@ jobs:
           java-version: '17'
           distribution: adopt
           cache: 'gradle'
+
+      - name: Install Google Chrome
+        run: |
+          chmod +x ./script/InstallChrome.sh
+           ./script/InstallChrome.sh
 
       - uses: nanasess/setup-chromedriver@v1
       - run: |
