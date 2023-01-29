@@ -4,9 +4,6 @@
     <meta charset="ISO-8859-1">
     <title>Technical interview questions</title>
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
-    <meta charset="UTF-8">
-    <title>Technical interview questions.</title>
-    <link rel="stylesheet" type="text/css" href="/css/style.x47307.css"/>
     <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </head>
