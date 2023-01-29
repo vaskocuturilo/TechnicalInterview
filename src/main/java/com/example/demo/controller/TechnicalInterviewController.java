@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/api/v1")
 public class TechnicalInterviewController {
     final TechnicalInterviewService technicalInterviewService;
 
@@ -19,21 +18,16 @@ public class TechnicalInterviewController {
         this.technicalInterviewService = technicalInterviewService;
     }
 
-    @GetMapping("")
-    public String viewHomePage() {
-        return "index";
-    }
-
-    @GetMapping("/questions")
+    @GetMapping("/")
     public String getAllTechnicalInterviewTasks(Model model) {
         List<TechnicalInterviewEntity> entityList = technicalInterviewService.getAllTechnicalInterviewTasks();
         model.addAttribute("entityList", entityList);
         model.addAttribute("entityListSize", entityList.size());
 
-        return "main";
+        return "index";
     }
 
-    @GetMapping("/random")
+    @GetMapping("/randomTask")
     public String getRandomTechnicalInterviewTask(Model model) {
         TechnicalInterviewEntity randomTechnicalInterviewQuestion = technicalInterviewService.getRandomQuestion();
         model.addAttribute("randomTechnicalInterviewQuestion", randomTechnicalInterviewQuestion);
@@ -46,21 +40,21 @@ public class TechnicalInterviewController {
     public String deleteTechnicalInterviewTask(@PathVariable Long id) {
         technicalInterviewService.deleteTechnicalInterviewTask(id);
 
-        return "redirect:/main";
+        return "redirect:/";
     }
 
     @RequestMapping(value = "/complete/{id}")
     public String completeTechnicalInterviewTask(@PathVariable Long id) {
         technicalInterviewService.completeTechnicalInterviewTask(true, id);
 
-        return "redirect:/main";
+        return "redirect:/";
     }
 
     @PostMapping(value = "/add")
     public String addNewTechnicalInterviewTask(@ModelAttribute TechnicalInterviewEntity technicalInterviewEntity) {
         technicalInterviewService.saveTechnicalInterviewTask(technicalInterviewEntity);
 
-        return "redirect:/main";
+        return "redirect:/";
     }
 
     @PostMapping("/upload")
@@ -72,6 +66,6 @@ public class TechnicalInterviewController {
     @RequestMapping("/reset")
     public String resetAllCompletedTechnicalInterviewTasks() {
         technicalInterviewService.resetAllCompletedTechnicalInterviewTasks();
-        return "redirect:/main";
+        return "redirect:/";
     }
 }
