@@ -13,12 +13,12 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 public class SimpleAPITest {
     private static RequestSpecification request;
 
-
     @BeforeAll
     public static void setupResponseSpecification() {
-        RestAssured.baseURI = "http://localhost:8080/";
+        RestAssured.baseURI = "http://127.0.0.1:8080/";
         request = RestAssured.given();
     }
+
     @Test
     public void makeSureThatHealthCheckEndpointUp() {
         Response response = request.get("actuator/health").then().statusCode(200).extract().response();
