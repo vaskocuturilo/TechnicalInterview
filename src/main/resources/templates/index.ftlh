@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="ISO-8859-1">
-    <title>Technical interview questions</title>
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
     <meta charset="UTF-8">
     <title>Technical interview questions.</title>
@@ -11,11 +10,36 @@
     <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
-<div class="container text-center">
-    <h1 id="h1_default_list_link">This is default list:</h1>`
-    <h3><a href="/api/v1/questions" id="list_questions_link">The list of questions</a></h3>
-    <h3><a href="#" id="login_page_link">Login Page</a></h3>
-    <h3><a href="#" id="register_page_link">Register Page</a></h3>
+<div class="box-form">
+    <div class="left">
+        <div class="overlay">
+            <h1>Hello World.</h1>
+            <span>
+			<p>Open your list of questions:</p>
+			<a href="/api/v1/questions" id="list_questions_link"><i class="fa fa-twitter" aria-hidden="true"></i>The list of questions</a>
+		</span>
+        </div>
+    </div>
+    <div class="right">
+        <h5>Login</h5>
+        <p>Don't have an account? <a href="#">Creat Your Account</a> it takes less than a minute</p>
+        <div class="inputs">
+            <input type="text" placeholder="user name">
+            <br>
+            <input type="password" placeholder="password">
+        </div>
+        <br><br>
+
+        <div class="remember-me--forget-password">
+            <label>
+                <input type="checkbox" name="item" checked/>
+                <span class="text-checkbox">Remember me</span>
+            </label>
+            <p>forget password?</p>
+        </div>
+        <br>
+        <button>Login</button>
+    </div>
 </div>
 </body>
 </html>

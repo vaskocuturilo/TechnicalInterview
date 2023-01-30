@@ -1,3 +1,5 @@
+<#import "/spring.ftl" as spring/>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,6 +12,7 @@
 <body>
 <h1>Technical interview questions.</h1>
 <h3>Add a question for the technical interview to list</h3>
+
 <form action="/api/v1/add" method="POST">
     <table border="1px" id="table_add_task">
         <tr>
@@ -34,7 +37,7 @@
 <br>
 <br>
 <h2>Upload the file with technical interview questions:</h2>
-<form action="/api/v1/upload" method="POST">
+<form action="/api/v1/upload" method="POST" enctype="multipart/form-data">
     <table border="1px" id="upload_file_table">
         <tr>
             <td>
@@ -46,6 +49,10 @@
         </tr>
     </table>
 </form>
+<br>
+<div>
+    <h3 id="upload_message"><#if message??>${message}</#if></h3>
+</div>
 <br>
 <h2>Reset all completed technical interview questions:</h2>
 <form action="/api/v1/reset" method="GET">
