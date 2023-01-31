@@ -2,7 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.TechnicalInterviewEntity;
 import com.example.demo.exception.StorageFileNotFoundException;
-import com.example.demo.service.StorageService;
+import com.example.demo.storage.StorageService;
 import com.example.demo.service.TechnicalInterviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +30,7 @@ public class TechnicalInterviewController {
 
     @GetMapping("")
     public String viewHomePage() {
-        return "index-1";
+        return "index";
     }
 
     @GetMapping("/questions")
@@ -42,13 +42,11 @@ public class TechnicalInterviewController {
     }
 
     @GetMapping("/random")
-    public String getRandomTechnicalInterviewTask(Model model) {
-        TechnicalInterviewEntity randomTechnicalInterviewQuestion = technicalInterviewService.getRandomQuestion();
-        model.addAttribute("randomTechnicalInterviewQuestion", randomTechnicalInterviewQuestion);
+    public String getRandomTechnicalInterviewTask() {
+        TechnicalInterviewEntity randomQuestion = technicalInterviewService.getRandomQuestion();
 
         return "errors";
     }
-
 
     @RequestMapping(value = "/delete/{id}")
     public String deleteTechnicalInterviewTask(@PathVariable Long id) {

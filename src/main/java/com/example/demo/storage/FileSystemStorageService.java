@@ -2,7 +2,6 @@ package com.example.demo.storage;
 
 import com.example.demo.exception.StorageException;
 import com.example.demo.exception.StorageFileNotFoundException;
-import com.example.demo.service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;

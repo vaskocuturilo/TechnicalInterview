@@ -1,6 +1,6 @@
 package com.example.demo;
 
-import com.example.demo.service.StorageService;
+import com.example.demo.storage.StorageService;
 import com.example.demo.storage.StorageProperties;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

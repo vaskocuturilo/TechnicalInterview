@@ -31,6 +31,7 @@ public class TechnicalInterviewService {
     public TechnicalInterviewEntity saveTechnicalInterviewTask(TechnicalInterviewEntity technicalInterviewEntity) {
         return technicalInterviewRepository.save(technicalInterviewEntity);
     }
+
     @Transactional
     public void deleteTechnicalInterviewTask(final Long id) {
         technicalInterviewRepository.deleteById(id);
