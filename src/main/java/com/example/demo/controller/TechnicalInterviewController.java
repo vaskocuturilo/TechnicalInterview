@@ -1,11 +1,12 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.TechnicalInterviewEntity;
+import com.example.demo.exception.QuestionNotFoundException;
 import com.example.demo.exception.StorageFileNotFoundException;
-import com.example.demo.storage.StorageService;
 import com.example.demo.service.TechnicalInterviewService;
+import com.example.demo.storage.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,13 @@ public class TechnicalInterviewController {
     private final TechnicalInterviewService technicalInterviewService;
 
     private final StorageService storageService;
+
+    @Value("${question.error.message}")
+    private String notFoundErrorMessage;
+
+
+    @Value("${storage.error.message}")
+    private String storageNotFoundErrorMessage;
 
     @Autowired
     public TechnicalInterviewController(TechnicalInterviewService technicalInterviewService, StorageService storageService) {
@@ -42,10 +50,16 @@ public class TechnicalInterviewController {
     }
 
     @GetMapping("/random")
-    public String getRandomTechnicalInterviewTask() {
+    public String getRandomTechnicalInterviewTask(RedirectAttributes redirectAttributes) {
         TechnicalInterviewEntity randomQuestion = technicalInterviewService.getRandomQuestion();
+        if (randomQuestion == null) {
+            throw new QuestionNotFoundException(notFoundErrorMessage);
+        }
 
-        return "errors";
+        redirectAttributes.addFlashAttribute("randomQuestion", "You random question is : "
+                + " Name: " + randomQuestion.getTaskName() + " Description: " + randomQuestion.getDescription());
+
+        return "redirect:/api/v1/questions";
     }
 
     @RequestMapping(value = "/delete/{id}")
@@ -73,8 +87,12 @@ public class TechnicalInterviewController {
     public String handleFileUpload(@RequestParam("upload") MultipartFile upload,
                                    RedirectAttributes redirectAttributes) {
 
+        if (upload.isEmpty() || upload == null) {
+            throw new StorageFileNotFoundException(storageNotFoundErrorMessage);
+        }
+
         storageService.store(upload);
-        redirectAttributes.addFlashAttribute("message", "You successfully uploaded " + upload.getOriginalFilename() + "!");
+        redirectAttributes.addFlashAttribute("message", "You successfully uploaded file is: " + upload.getOriginalFilename());
 
         return "redirect:/api/v1/questions";
     }
@@ -83,10 +101,5 @@ public class TechnicalInterviewController {
     public String resetAllCompletedTechnicalInterviewTasks() {
         technicalInterviewService.resetAllCompletedTechnicalInterviewTasks();
         return "redirect:/api/v1/questions";
-    }
-
-    @ExceptionHandler(StorageFileNotFoundException.class)
-    public ResponseEntity<?> handleStorageFileNotFound(StorageFileNotFoundException exc) {
-        return ResponseEntity.notFound().build();
     }
 }
