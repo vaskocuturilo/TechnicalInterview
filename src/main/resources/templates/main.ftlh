@@ -41,7 +41,7 @@
     <table border="1px" id="upload_file_table">
         <tr>
             <td>
-                <input type="file" id="upload_file" name="upload" accept="json/yaml">
+                <input type="file" id="upload_file" name="upload" accept="application/JSON">
             </td>
             <td>
                 <input type="submit" id="upload_file_button" value="upload file">
@@ -94,6 +94,9 @@
             </td>
         </tr>
     </table>
+    <div>
+        <h3><#if randomQuestion??>${randomQuestion}</#if></h3>
+    </div>
 </form>
 </body>
 </html>

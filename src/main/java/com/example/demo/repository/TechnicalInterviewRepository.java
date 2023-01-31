@@ -10,7 +10,7 @@ public interface TechnicalInterviewRepository extends JpaRepository<TechnicalInt
     @Query("update TechnicalInterviewEntity tech set tech.completed = ?1 where tech.taskId = ?2")
     void setCompletedStatus(boolean completed, Long id);
 
-    @Query("SELECT tech FROM TechnicalInterviewEntity tech order by function('RAND') LIMIT 1")
+    @Query("SELECT tech FROM TechnicalInterviewEntity tech WHERE tech.completed = false ORDER BY function('RAND') LIMIT 1")
     TechnicalInterviewEntity findQuestion();
 
     @Query("SELECT tech FROM TechnicalInterviewEntity  tech WHERE tech.taskName = ?1")
