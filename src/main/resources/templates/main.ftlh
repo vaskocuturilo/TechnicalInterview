@@ -1,5 +1,3 @@
-<#import "/spring.ftl" as spring/>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -85,18 +83,14 @@
 <br>
 <br>
 <br>
-<h2>The technical interview question is -> ${randomTechnicalInterviewQuestion!""}</h2>
 <form action="/api/v1/random" method="GET">
-    <table border="1px" id="random_task_table">
+    <table>
         <tr>
             <td>
                 <input type="submit" id="random_button" value="Random">
             </td>
         </tr>
     </table>
-    <div>
-        <h3><#if randomQuestion??>${randomQuestion}</#if></h3>
-    </div>
 </form>
 </body>
 </html>
