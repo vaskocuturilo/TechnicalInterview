@@ -23,7 +23,7 @@ public class TechnicalInterviewService {
     }
 
     @Transactional
-    public TechnicalInterviewEntity getRandomQuestion() {
+    public List<TechnicalInterviewEntity> getRandomQuestion() {
         return technicalInterviewRepository.findQuestion();
     }
 

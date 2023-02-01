@@ -46,20 +46,21 @@ public class TechnicalInterviewController {
         List<TechnicalInterviewEntity> entityList = technicalInterviewService.getAllTechnicalInterviewTasks();
         model.addAttribute("entityList", entityList);
         model.addAttribute("entityListSize", entityList.size());
+
         return "main";
     }
 
     @GetMapping("/random")
-    public String getRandomTechnicalInterviewTask(RedirectAttributes redirectAttributes) {
-        TechnicalInterviewEntity randomQuestion = technicalInterviewService.getRandomQuestion();
-        if (randomQuestion == null) {
+    public String getRandomTechnicalInterviewTask(final Model model) {
+        List<TechnicalInterviewEntity> randomQuestion = technicalInterviewService.getRandomQuestion();
+        if (randomQuestion.isEmpty() || randomQuestion.size() == 0) {
             throw new QuestionNotFoundException(notFoundErrorMessage);
         }
 
-        redirectAttributes.addFlashAttribute("randomQuestion", "You random question is : "
-                + " Name: " + randomQuestion.getTaskName() + " Description: " + randomQuestion.getDescription());
+        model.addAttribute("randomQuestion", randomQuestion);
+        model.addAttribute("randomQuestionSize", randomQuestion.size());
 
-        return "redirect:/api/v1/questions";
+        return "random";
     }
 
     @RequestMapping(value = "/delete/{id}")
