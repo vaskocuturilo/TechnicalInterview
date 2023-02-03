@@ -32,6 +32,17 @@ public class TechnicalInterviewService {
     }
 
     @Transactional
+    public void editTechnicalInterviewTask(TechnicalInterviewEntity technicalInterviewEntity, final Long id) {
+        technicalInterviewRepository.findById(id)
+                .ifPresent(question -> {
+                    question.setTaskName(technicalInterviewEntity.getTaskName());
+                    question.setDescription(technicalInterviewEntity.getDescription());
+
+                    technicalInterviewRepository.save(question);
+                });
+    }
+
+    @Transactional
     public Iterable<TechnicalInterviewEntity> saveTechnicalInterviewTasks(List<TechnicalInterviewEntity> technicalInterviewEntities) {
         return technicalInterviewRepository.saveAll(technicalInterviewEntities);
     }

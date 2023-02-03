@@ -70,7 +70,16 @@ public class TechnicalInterviewController {
         model.addAttribute("randomQuestion", randomQuestion);
         model.addAttribute("randomQuestionSize", randomQuestion.size());
 
-        return "random";
+        return "question";
+    }
+
+    @RequestMapping(value = "/edit/{id}")
+    public String editTechnicalInterviewTask(@PathVariable Long id,
+                                             @ModelAttribute TechnicalInterviewEntity technicalInterviewEntity) {
+
+        technicalInterviewService.editTechnicalInterviewTask(technicalInterviewEntity, id);
+
+        return "edit";
     }
 
     @RequestMapping(value = "/delete/{id}")
