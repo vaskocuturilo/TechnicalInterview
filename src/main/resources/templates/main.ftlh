@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Technical interview questions</title>
-    <link rel="stylesheet" type="text/css" href="/css/style.x47307.css"/>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
     <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
 <h1>Technical interview questions.</h1>
 <h3>Add a question for the technical interview to list</h3>
-
 <form action="/api/v1/add" method="POST">
     <table border="1px" id="table_add_task">
         <tr>
@@ -58,28 +57,32 @@
 </form>
 <br>
 <h2>Technical interview questions: (questions count : ${entityListSize})</h2>
-<table border="1px" id="list_tasks_table">
-    <tr>
-        <td>Id</td>
-        <td>Task Name</td>
-        <td>Description</td>
-        <td>Completed</td>
-        <td>Edit task</td>
-        <td>Complete task</td>
-        <td>Delete from list</td>
-    </tr>
-    <#list entityList as task>
+<div>
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
         <tr>
-            <td>${task.taskId}</td>
-            <td>${task.taskName}</td>
-            <td>${task.description}</td>
-            <td>${task.completed?string("Yes","No")}</td>
-            <td><a href="${'/#/'+task.taskId}">Edit</a></td>
-            <td><a href="${'/api/v1/complete/'+task.taskId}">Complete</a></td>
-            <td><a href="${'/api/v1/delete/'+task.taskId}">Delete</a></td>
+            <td>Task Name</td>
+            <td>Description</td>
+            <td>Completed</td>
+            <td>Edit task</td>
+            <td>Complete task</td>
+            <td>Delete from list</td>
         </tr>
-    </#list>
-</table>
+        </thead>
+        <tbody>
+        <#list entityList as task>
+            <tr>
+                <td><#if task.taskName??>${task.taskName}</#if></td>
+                <td><#if task.description??>${task.description}</#if></td>
+                <td><#if task.completed??>${task.completed?string("Yes","No")}</#if></td>
+                <td><a href="${'/api/v1/edit/'+task.taskId}">Edit</a></td>
+                <td><a href="${'/api/v1/complete/'+task.taskId}">Complete</a></td>
+                <td><a href="${'/api/v1/delete/'+task.taskId}">Delete</a></td>
+            </tr>
+        </#list>
+        </tbody>
+    </table>
+</div>
 <br>
 <br>
 <br>
