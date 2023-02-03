@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class TechnicalInterviewEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
