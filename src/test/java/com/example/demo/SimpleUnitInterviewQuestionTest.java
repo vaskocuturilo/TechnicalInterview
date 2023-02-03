@@ -3,11 +3,13 @@ package com.example.demo;
 
 import com.example.demo.entity.TechnicalInterviewEntity;
 import com.example.demo.repository.TechnicalInterviewRepository;
+import com.example.demo.storage.StorageService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Description;
 import org.springframework.test.annotation.Rollback;
 
@@ -26,6 +28,8 @@ public class SimpleUnitInterviewQuestionTest {
     @Autowired
     private TechnicalInterviewRepository technicalInterviewRepository;
 
+    @MockBean
+    private StorageService storageService;
 
     @Test
     @Description("This is a simple unit test.")
