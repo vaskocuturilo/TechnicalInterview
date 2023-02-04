@@ -18,7 +18,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/api/v1")
 public class TechnicalInterviewController {
-    @Autowired
+
     private final TechnicalInterviewService technicalInterviewService;
 
     private final StorageService storageService;
@@ -44,8 +44,12 @@ public class TechnicalInterviewController {
     @GetMapping("/questions")
     public String getAllTechnicalInterviewTasks(Model model) {
         List<TechnicalInterviewEntity> entityList = technicalInterviewService.getAllTechnicalInterviewTasks();
+        Integer pass = technicalInterviewService.getAllTechnicalInterviewQuestionStatusPass();
+        Integer fail = technicalInterviewService.getAllTechnicalInterviewQuestionStatusFail();
         model.addAttribute("entityList", entityList);
         model.addAttribute("entityListSize", entityList.size());
+        model.addAttribute("pass", pass);
+        model.addAttribute("fail", fail);
 
         return "main";
     }

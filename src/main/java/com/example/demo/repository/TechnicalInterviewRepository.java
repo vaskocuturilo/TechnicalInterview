@@ -18,6 +18,12 @@ public interface TechnicalInterviewRepository extends JpaRepository<TechnicalInt
     @Query("SELECT tech FROM TechnicalInterviewEntity  tech WHERE tech.taskName = ?1")
     TechnicalInterviewEntity findByTaskName(String taskName);
 
+    @Query("SELECT COUNT(tech.completed) FROM TechnicalInterviewEntity tech WHERE tech.completed = true ")
+    Integer findByQuestionIsPass();
+
+    @Query("SELECT COUNT(tech.completed) FROM TechnicalInterviewEntity tech WHERE tech.completed = false")
+    Integer findByQuestionIsFail();
+
     @Modifying
     @Query("update TechnicalInterviewEntity tech set tech.completed = false")
     void resetAllCompleted();

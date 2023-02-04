@@ -57,6 +57,10 @@
 </form>
 <br>
 <h2>Technical interview questions: (questions count : ${entityListSize})</h2>
+<br>
+<h2>Technical interview questions in status pass is: (questions count : <#if pass??>${pass}</#if>)</h2>
+<br>
+<h2>Technical interview questions in status fail is: (questions count : <#if fail??>${fail}</#if>)</h2>
 <div>
     <table class="table table-striped table-bordered">
         <thead class="table-dark">
@@ -74,7 +78,7 @@
             <tr>
                 <td><#if task.taskName??>${task.taskName}</#if></td>
                 <td><#if task.description??>${task.description}</#if></td>
-                <td><#if task.completed??>${task.completed?string("Yes","No")}</#if></td>
+                <td><#if task.completed??>${task.completed?string("Pass","Fail")}</#if></td>
                 <td><a href="${'/api/v1/edit/'+task.taskId}">Edit</a></td>
                 <td><a href="${'/api/v1/complete/'+task.taskId}">Complete</a></td>
                 <td><a href="${'/api/v1/delete/'+task.taskId}">Delete</a></td>

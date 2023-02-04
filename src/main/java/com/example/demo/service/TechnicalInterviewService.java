@@ -61,4 +61,14 @@ public class TechnicalInterviewService {
     public void resetAllCompletedTechnicalInterviewTasks() {
         technicalInterviewRepository.resetAllCompleted();
     }
+
+    @Transactional
+    public Integer getAllTechnicalInterviewQuestionStatusPass() {
+        return technicalInterviewRepository.findByQuestionIsPass();
+    }
+
+    @Transactional
+    public Integer getAllTechnicalInterviewQuestionStatusFail() {
+        return technicalInterviewRepository.findByQuestionIsFail();
+    }
 }
