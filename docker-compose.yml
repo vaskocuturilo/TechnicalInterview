@@ -1,0 +1,18 @@
+version: '3.3'
+services:
+  database:
+    image: mysql:8.0
+    container_name: mysql-database
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'technical_interview'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    env_file:
+      - .env
+    volumes:
+      - my-db:/var/lib/mysql
+volumes:
+  my-db:
