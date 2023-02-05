@@ -1,6 +1,8 @@
 package com.example.demo.upload;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public interface UploadService {
 
-    void upload(final String file);
+    void upload(MultipartFile file);
 }

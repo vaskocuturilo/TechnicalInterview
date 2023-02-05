@@ -11,6 +11,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
 import java.time.Duration;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,7 +29,15 @@ public class SimpleUITest {
     private static By MAIN_PAGE_LINK_QUESTIONS = By.xpath("//a[@id='list_questions_link']");
     private static By TABLE_TITLE = By.xpath("//h2[contains(text(),'Technical interview questions')]");
 
+    private static By UPLOAD_FILE = By.xpath("//input[@id='upload_file']");
+
+    private static By UPLOAD_FILE_BUTTON = By.xpath("//input[@id='upload_file_button']");
+
+    private static By MESSAGE = By.xpath("//h3[@id='upload_message']");
+
     private static final String TEXT = "Technical interview questions: (questions count : %s)";
+
+    private static final String UPLOAD_MESSAGE = "You successfully uploaded file is: %s";
 
     @BeforeAll
     public static void setUp() {
@@ -81,6 +90,20 @@ public class SimpleUITest {
 
         assertThat(webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(TABLE_TITLE)).getText()).isEqualTo(String.format(TEXT, 0));
     }
+
+    @Test
+    public void testUploadFile() {
+        File file = new File("src/main/resources/upload.json");
+        webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(DELAY));
+        assertThat(webDriver.getTitle()).isEqualTo("Technical interview questions");
+
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(UPLOAD_FILE)).sendKeys(file.getAbsolutePath());
+
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(UPLOAD_FILE_BUTTON)).click();
+
+        assertThat(webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(MESSAGE)).getText()).isEqualTo(String.format(UPLOAD_MESSAGE, "upload.json"));
+    }
+
 
     @AfterAll
     public static void tearDown() {

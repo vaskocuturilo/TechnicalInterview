@@ -5,6 +5,7 @@ import com.example.demo.exception.QuestionNotFoundException;
 import com.example.demo.exception.StorageFileNotFoundException;
 import com.example.demo.service.TechnicalInterviewService;
 import com.example.demo.storage.StorageService;
+import com.example.demo.upload.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,7 @@ public class TechnicalInterviewController {
     private final TechnicalInterviewService technicalInterviewService;
 
     private final StorageService storageService;
+    private final UploadService uploadService;
 
     @Value("${question.error.message}")
     private String notFoundErrorMessage;
@@ -31,9 +33,10 @@ public class TechnicalInterviewController {
     private String storageNotFoundErrorMessage;
 
     @Autowired
-    public TechnicalInterviewController(TechnicalInterviewService technicalInterviewService, StorageService storageService) {
+    public TechnicalInterviewController(TechnicalInterviewService technicalInterviewService, StorageService storageService, UploadService uploadService) {
         this.technicalInterviewService = technicalInterviewService;
         this.storageService = storageService;
+        this.uploadService = uploadService;
     }
 
     @GetMapping("")
@@ -46,8 +49,10 @@ public class TechnicalInterviewController {
         List<TechnicalInterviewEntity> entityList = technicalInterviewService.getAllTechnicalInterviewTasks();
         Integer pass = technicalInterviewService.getAllTechnicalInterviewQuestionStatusPass();
         Integer fail = technicalInterviewService.getAllTechnicalInterviewQuestionStatusFail();
+
         model.addAttribute("entityList", entityList);
         model.addAttribute("entityListSize", entityList.size());
+
         model.addAttribute("pass", pass);
         model.addAttribute("fail", fail);
 
@@ -90,20 +95,22 @@ public class TechnicalInterviewController {
         return "redirect:/api/v1/questions";
     }
 
-    @PostMapping(value = "/add")
+    @PostMapping(value = "/questions")
     public String addNewTechnicalInterviewTask(@ModelAttribute TechnicalInterviewEntity technicalInterviewEntity) {
         technicalInterviewService.saveTechnicalInterviewTask(technicalInterviewEntity);
 
         return "redirect:/api/v1/questions";
     }
 
-    @PostMapping("/upload")
-    public String handleFileUpload(@RequestParam("upload") MultipartFile file, RedirectAttributes redirectAttributes) {
+    @PostMapping("/questions/upload")
+    public String handleFileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
         if (file.isEmpty() || file == null) {
             throw new StorageFileNotFoundException(storageNotFoundErrorMessage);
         }
 
         storageService.store(file);
+        uploadService.upload(file);
+
         redirectAttributes.addFlashAttribute("message", "You successfully uploaded file is: " + file.getOriginalFilename());
 
         return "redirect:/api/v1/questions";
