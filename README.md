@@ -27,28 +27,32 @@ You will need the following technologies available to try it out:
 * Docker
 * IDE of your choice
 
-
 ## TO-DO list (ASAP):
 
-- Add functionality for the upload questions from JSON/YAML file.
-- Add functionality for random assignment for a question.
-- Add countably result (pass/fail) - questions. 
-- Add functionality for resetting results from the completed column.
-- Add login/register pages. 
-- Add iOS app for this service. 
-- Add unit tests. 
-- Add API tests.
-- Add UI tests.
+- Add functionality for the upload questions from JSON file. :heavy_check_mark:
+- Add functionality for random assignment for a question. :heavy_check_mark:
+- Add countably result (pass/fail) - questions. :heavy_check_mark:
+- Add functionality for resetting results from the completed column. :heavy_check_mark:
+- Add login/register pages.
+- Add users and connection one-to-many.
+- Add iOS app for this service.
+- Add unit tests. :heavy_check_mark:
+- Add API tests. :heavy_check_mark:
+- Add UI tests. :heavy_check_mark:
+- Migration from Freemarker -> Thymeleaf -> React
+-
 
 ### Schema databases
+
 ![]()
 
 ### How it works.
+
 ![]()
 
 ### Swagger-UI. ()
-![]()
 
+![]()
 
 ### Actuator
 
@@ -57,6 +61,7 @@ You will need the following technologies available to try it out:
 * http://localhost:8090/actuator/info
 
 ### http://localhost:8090/actuator/health
+
 ```{"status":"UP"}```
 
 ### Ho w to run.
