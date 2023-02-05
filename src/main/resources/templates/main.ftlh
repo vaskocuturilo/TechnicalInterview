@@ -10,7 +10,7 @@
 <body>
 <h1>Technical interview questions.</h1>
 <h3>Add a question for the technical interview to list</h3>
-<form action="/api/v1/add" method="POST">
+<form action="/api/v1/questions" method="POST">
     <table border="1px" id="table_add_task">
         <tr>
             <td>
@@ -34,11 +34,11 @@
 <br>
 <br>
 <h2>Upload the file with technical interview questions:</h2>
-<form action="/api/v1/upload" method="POST" enctype="multipart/form-data">
+<form action="/api/v1/questions/upload" method="POST" enctype="multipart/form-data">
     <table border="1px" id="upload_file_table">
         <tr>
             <td>
-                <input type="file" id="upload_file" name="upload" accept="application/JSON">
+                <input type="file" id="upload_file" name="file" accept="application/JSON">
             </td>
             <td>
                 <input type="submit" id="upload_file_button" value="upload file">
