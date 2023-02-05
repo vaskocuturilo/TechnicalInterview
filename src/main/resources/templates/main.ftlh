@@ -8,96 +8,131 @@
     <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
-<h1>Technical interview questions.</h1>
-<h3>Add a question for the technical interview to list</h3>
-<form action="/api/v1/questions" method="POST">
-    <table border="1px" id="table_add_task">
-        <tr>
-            <td>
-                <label id="task_name_label">Task name: </label>
-                <input type="text" id="task_name_input" name="taskName" required minlength="1" maxlength="255">
-            </td>
-            <td>
-                <label id="description_label">Description:</label>
-                <input type="text" id="description_input" name="description" required minlength="1" maxlength="255">
-            </td>
-            <td>
-                <label id="complete_label">Complete:</label>
-                <input type="checkbox" id="complete_checkbox" name="complete_checkbox" disabled>
-            </td>
-            <td>
-                <input type="submit" id="add_task_button" value="Add task">
-            </td>
-        </tr>
-    </table>
-</form>
+<div class="container text-center">
+    <h1>Technical interview questions.</h1>
+</div>
+<div class="m-3">
+    <h5>Add a question for the technical interview to list</h5>
+    <div class="form-group row">
+        <form action="/api/v1/questions" method="POST">
+            <table border="1px" id="table_add_task">
+                <tr>
+                    <td>
+                        <strong><label class="col-4 col-form-label" id="task_name_label">Task name: </label></strong>
+                        <div class="col-8">
+                            <input type="text" id="task_name_input" name="taskName" required minlength="1"
+                                   maxlength="255">
+                        </div>
+                    </td>
+                    <td>
+                        <strong><label class="col-4 col-form-label" id="description_label">Description:</label></strong>
+                        <div class="col-8">
+                            <input type="text" id="description_input" name="description" required minlength="1"
+                                   maxlength="255">
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <br>
+            <div>
+                <button type="submit" class="btn btn-primary" id="button_add_question">Add question</button>
+            </div>
+        </form>
+    </div>
+</div>
 <br>
-<br>
-<h2>Upload the file with technical interview questions:</h2>
-<form action="/api/v1/questions/upload" method="POST" enctype="multipart/form-data">
-    <table border="1px" id="upload_file_table">
-        <tr>
-            <td>
-                <input type="file" id="upload_file" name="file" accept="application/JSON">
-            </td>
-            <td>
-                <input type="submit" id="upload_file_button" value="upload file">
-            </td>
-        </tr>
-    </table>
-</form>
-<br>
+<div class="m-3">
+    <h5>Upload the file with technical interview questions:</h5>
+    <div class="form-group row">
+        <form action="/api/v1/questions/upload" method="POST" enctype="multipart/form-data">
+            <table border="1px" id="upload_file_table">
+                <tr>
+                    <td>
+                        <div class="col-8">
+                            <input type="file" id="upload_file" name="file" accept="application/JSON">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="col-8">
+                            <button type="submit" class="btn btn-primary" id="upload_file_button">upload</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
 <div>
     <h3 id="upload_message"><#if message??>${message}</#if></h3>
 </div>
-<br>
-<h2>Reset all completed technical interview questions:</h2>
-<form action="/api/v1/reset" method="GET">
-    <input type="submit" id="reset_button" value="Reset">
-</form>
-<br>
-<h2>Technical interview questions: (questions count : ${entityListSize})</h2>
-<br>
-<h2>Technical interview questions in status pass is: (questions count : <#if pass??>${pass}</#if>)</h2>
-<br>
-<h2>Technical interview questions in status fail is: (questions count : <#if fail??>${fail}</#if>)</h2>
-<div>
-    <table class="table table-striped table-bordered">
-        <thead class="table-dark">
-        <tr>
-            <td>Task Name</td>
-            <td>Description</td>
-            <td>Completed</td>
-            <td>Edit task</td>
-            <td>Complete task</td>
-            <td>Delete from list</td>
-        </tr>
-        </thead>
-        <tbody>
-        <#list entityList as task>
+<div class="m-3">
+    <div class="form-group row">
+        <h5>Reset all completed technical interview questions:</h5>
+        <form action="/api/v1/reset" method="GET">
+            <button type="submit" class="btn btn-primary" id="reset_button">Reset all questions</button>
+        </form>
+    </div>
+</div>
+<div class="m-3">
+    <div class="container text-center">
+        <h5>Technical interview questions: (questions count : ${entityListSize})</h5>
+    </div>
+</div>
+<div class="m-3">
+    <div class="container text-center">
+        <h5>Technical interview questions in status pass is: (questions count : <#if pass??>${pass}</#if>)</h5>
+    </div>
+</div>
+<div class="m-3">
+    <div class="container text-center">
+        <h5>Technical interview questions in status fail is: (questions count : <#if fail??>${fail}</#if>)</h5>
+    </div>
+</div>
+<div class="container text-center">
+    <div>
+        <table class="table table-striped table-bordered">
+            <thead class="table-dark">
             <tr>
-                <td><#if task.taskName??>${task.taskName}</#if></td>
-                <td><#if task.description??>${task.description}</#if></td>
-                <td><#if task.completed??>${task.completed?string("Pass","Fail")}</#if></td>
-                <td><a href="${'/api/v1/edit/'+task.taskId}">Edit</a></td>
-                <td><a href="${'/api/v1/complete/'+task.taskId}">Complete</a></td>
-                <td><a href="${'/api/v1/delete/'+task.taskId}">Delete</a></td>
+                <td>Task Name</td>
+                <td>Description</td>
+                <td>Completed</td>
+                <td>Edit task</td>
+                <td>Complete task</td>
+                <td>Delete from list</td>
             </tr>
-        </#list>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            <#list entityList as task>
+                <tr>
+                    <td><#if task.taskName??>${task.taskName}</#if></td>
+                    <td><#if task.description??>${task.description}</#if></td>
+                    <td><#if task.completed??>${task.completed?string("Pass","Fail")}</#if></td>
+                    <td><a href="${'/api/v1/edit/'+task.taskId}">Edit</a></td>
+                    <td><a href="${'/api/v1/complete/'+task.taskId}">Complete</a></td>
+                    <td><a href="${'/api/v1/delete/'+task.taskId}">Delete</a></td>
+                </tr>
+            </#list>
+            </tbody>
+        </table>
+    </div>
 </div>
 <br>
-<br>
-<br>
-<form action="/api/v1/random" method="GET">
-    <table>
-        <tr>
-            <td>
-                <input type="submit" id="random_button" value="Random">
-            </td>
-        </tr>
-    </table>
-</form>
+<div class="form-group row">
+    <form action="/api/v1/random" method="GET">
+        <table>
+            <tr>
+                <td>
+                </td>
+            </tr>
+        </table>
+        <div class="col-8">
+            <div class="container text-center">
+                <button type="submit" class="btn btn-primary" id="random_button" value="Random">Click for random
+                    question
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
 </body>
 </html>
