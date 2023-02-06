@@ -2,7 +2,7 @@
 
 ## Spring Boot Technical interview questions service.
 
-The Spring Boot REST service for TechInterview application.
+The Spring Boot REST service for Tech Interview application.
 
 ## Requirements:
 
@@ -36,11 +36,12 @@ You will need the following technologies available to try it out:
 - Add login/register pages.
 - Add users and connection one-to-many.
 - Add iOS app for this service.
+- Add functionality for the upload questions from TXT/YAML/XLSX file.
+- Add functionality for delete all questions from table.
 - Add unit tests. :heavy_check_mark:
 - Add API tests. :heavy_check_mark:
 - Add UI tests. :heavy_check_mark:
-- Migration from Freemarker -> Thymeleaf -> React
--
+- Update Front end :heavy_check_mark:
 
 ### Schema databases
 
