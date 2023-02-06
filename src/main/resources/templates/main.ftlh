@@ -18,14 +18,16 @@
             <table border="1px" id="table_add_task">
                 <tr>
                     <td>
-                        <strong><label class="col-4 col-form-label" id="task_name_label">Task name: </label></strong>
+                        <strong><label class="col-4 col-form-label" id="task_name_label">Task
+                                name: </label></strong>
                         <div class="col-8">
                             <input type="text" id="task_name_input" name="taskName" required minlength="1"
                                    maxlength="255">
                         </div>
                     </td>
                     <td>
-                        <strong><label class="col-4 col-form-label" id="description_label">Description:</label></strong>
+                        <strong><label class="col-4 col-form-label"
+                                       id="description_label">Description:</label></strong>
                         <div class="col-8">
                             <input type="text" id="description_input" name="description" required minlength="1"
                                    maxlength="255">
@@ -54,7 +56,8 @@
                     </td>
                     <td>
                         <div class="col-8">
-                            <button type="submit" class="btn btn-primary" id="upload_file_button">upload</button>
+                            <button type="submit" class="btn btn-primary" id="upload_file_button">upload
+                            </button>
                         </div>
                     </td>
                 </tr>
@@ -109,7 +112,8 @@
                     <td><#if task.completed??>${task.completed?string("Pass","Fail")}</#if></td>
                     <td><a href="${'/api/v1/edit/'+task.taskId}">Edit</a></td>
                     <td><a href="${'/api/v1/complete/'+task.taskId}">Complete</a></td>
-                    <td><a href="${'/api/v1/delete/'+task.taskId}">Delete</a></td>
+                    <td><a href="${'/api/v1/delete/'+task.taskId}" onclick="return confirm('Are you sure?')">Delete</a>
+                    </td>
                 </tr>
             </#list>
             </tbody>
@@ -127,7 +131,8 @@
         </table>
         <div class="col-8">
             <div class="container text-center">
-                <button type="submit" class="btn btn-primary" id="random_button" value="Random">Click for random
+                <button type="submit" class="btn btn-primary" id="random_button" value="Random">Click for
+                    random
                     question
                 </button>
             </div>
