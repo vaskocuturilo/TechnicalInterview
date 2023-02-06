@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.TechnicalInterviewEntity;
-import com.example.demo.exception.QuestionNotFoundException;
 import com.example.demo.exception.StorageFileNotFoundException;
 import com.example.demo.service.TechnicalInterviewService;
 import com.example.demo.storage.StorageService;
@@ -19,16 +18,10 @@ import java.util.List;
 @Controller
 @RequestMapping("/api/v1")
 public class TechnicalInterviewController {
-
     private final TechnicalInterviewService technicalInterviewService;
 
     private final StorageService storageService;
     private final UploadService uploadService;
-
-    @Value("${question.error.message}")
-    private String notFoundErrorMessage;
-
-
     @Value("${storage.error.message}")
     private String storageNotFoundErrorMessage;
 
@@ -47,6 +40,7 @@ public class TechnicalInterviewController {
     @GetMapping("/questions")
     public String getAllTechnicalInterviewTasks(Model model) {
         List<TechnicalInterviewEntity> entityList = technicalInterviewService.getAllTechnicalInterviewTasks();
+
         Integer pass = technicalInterviewService.getAllTechnicalInterviewQuestionStatusPass();
         Integer fail = technicalInterviewService.getAllTechnicalInterviewQuestionStatusFail();
 
@@ -62,9 +56,6 @@ public class TechnicalInterviewController {
     @GetMapping("/random")
     public String getRandomTechnicalInterviewTask(final Model model) {
         List<TechnicalInterviewEntity> randomQuestion = technicalInterviewService.getRandomQuestion();
-        if (randomQuestion.isEmpty() || randomQuestion.size() == 0) {
-            throw new QuestionNotFoundException(notFoundErrorMessage);
-        }
 
         model.addAttribute("randomQuestion", randomQuestion);
         model.addAttribute("randomQuestionSize", randomQuestion.size());
@@ -104,7 +95,7 @@ public class TechnicalInterviewController {
 
     @PostMapping("/questions/upload")
     public String handleFileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
-        if (file.isEmpty() || file == null) {
+        if (file.isEmpty() || file.getSize() == 0) {
             throw new StorageFileNotFoundException(storageNotFoundErrorMessage);
         }
 
