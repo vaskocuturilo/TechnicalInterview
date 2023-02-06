@@ -5,7 +5,9 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -22,15 +24,17 @@ public class SimpleUITest {
     private static final int DELAY = 10;
     private static By TASK_NAME = By.xpath("//input[@name='taskName']");
     private static By DESCRIPTION = By.xpath("//input[@name='description']");
-    private static By ADD_QUESTION_BUTTON = By.xpath("//button[@id='button_add_question']");
-    private static By DELETE_BUTTON = By.xpath("//a[contains(text(),'Delete')]");
+    private static By ADD_QUESTION_BUTTON = By.xpath("//input[@id='button_add_question']");
+    private static By DELETE_LINK = By.xpath("//a[@id='cell_delete']");
     private static By TABLE = By.xpath("//td[contains(text(), 'Delete from list')]");
     private static By MAIN_PAGE_LINK_QUESTIONS = By.xpath("//a[@id='list_questions_link']");
-    private static By TABLE_TITLE = By.xpath("//h5[contains(text(),'Technical interview questions')]");
+    private static By TOTAL_COUNT = By.xpath("//h1[@id='total_count']");
+    private static By PASS_COUNT = By.xpath("//h1[@id='pass_count']");
+    private static By FAIL_COUNT = By.xpath("//h1[@id='fail_count']");
     private static By UPLOAD_FILE = By.xpath("//input[@id='upload_file']");
-    private static By UPLOAD_FILE_BUTTON = By.xpath("//button[@id='upload_file_button']");
-    private static By MESSAGE = By.xpath("//h3[@id='upload_message']");
-    private static final String TEXT = "Technical interview questions: (questions count : %s)";
+    private static By UPLOAD_FILE_BUTTON = By.xpath("//input[@id='upload_questions']");
+    private static By COMPLETE_CELL = By.xpath("//table[@class='table table-striped table-bordered']//td[contains(text(),'Test complete')]/following-sibling::td//a[@id='cell_complete']");
+    private static By MESSAGE = By.xpath("//p[@id='info_message']");
     private static final String UPLOAD_MESSAGE = "You successfully uploaded file is: %s";
     private static final String ERROR_UPLOAD_MESSAGE = "Maximum upload size of %s exceeded";
 
@@ -55,11 +59,33 @@ public class SimpleUITest {
     @Test
     public void testVerifyAddElementsOnPage() {
         webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(DELAY));
+
+        Integer totalCount = Integer.parseInt(webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(TOTAL_COUNT)).getText());
+
+        Integer failCount = Integer.parseInt(webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(FAIL_COUNT)).getText());
+
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(TASK_NAME)).sendKeys("Test1");
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(DESCRIPTION)).sendKeys("Test1");
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(ADD_QUESTION_BUTTON)).click();
 
-        assertThat(webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(TABLE_TITLE)).getText()).isEqualTo(String.format(TEXT, "1"));
+        assertThat(Integer.parseInt(webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(TOTAL_COUNT)).getText())).isEqualTo(++totalCount);
+        assertThat(Integer.parseInt(webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(FAIL_COUNT)).getText())).isEqualTo(++failCount);
+    }
+
+    @Test
+    public void testVerifyCompleteQuestion() {
+        final String taskName = "Test complete";
+        webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(DELAY));
+        Integer count = Integer.parseInt(webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(PASS_COUNT)).getText());
+
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(TASK_NAME)).sendKeys(taskName);
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(DESCRIPTION)).sendKeys(taskName);
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(ADD_QUESTION_BUTTON)).click();
+
+        scrollPage();
+        waiter(3000);
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(COMPLETE_CELL)).click();
+        assertThat(Integer.parseInt(webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(PASS_COUNT)).getText())).isEqualTo(++count);
     }
 
     @Test
@@ -73,17 +99,23 @@ public class SimpleUITest {
     }
 
     @Test
-    public void testDeleteElementFormTable() {
+    public void testDeleteElementFromTable() {
         webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(DELAY));
         assertThat(webDriver.getTitle()).isEqualTo("Technical interview questions");
 
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(TASK_NAME)).sendKeys("Test1");
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(DESCRIPTION)).sendKeys("Test1");
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(ADD_QUESTION_BUTTON)).click();
+
         assertThat(webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(TABLE)).isDisplayed());
 
-        assertThat(webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(TABLE_TITLE)).getText()).isEqualTo(String.format(TEXT, "1"));
+        Integer count = Integer.parseInt(webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(TOTAL_COUNT)).getText());
 
-        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(DELETE_BUTTON)).click();
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(DELETE_LINK)).click();
+        Alert alert = webDriver.switchTo().alert();
+        alert.accept();
 
-        assertThat(webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(TABLE_TITLE)).getText()).isEqualTo(String.format(TEXT, 0));
+        assertThat(Integer.parseInt(webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(TOTAL_COUNT)).getText())).isEqualTo(--count);
     }
 
     @Test
@@ -116,6 +148,19 @@ public class SimpleUITest {
     public static void tearDown() {
         if (webDriver != null) {
             webDriver.quit();
+        }
+    }
+
+    private void scrollPage() {
+        JavascriptExecutor js = ((JavascriptExecutor) webDriver);
+        js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+    }
+
+    private void waiter(final Integer time) {
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 }
