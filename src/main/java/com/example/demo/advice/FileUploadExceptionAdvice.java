@@ -19,6 +19,5 @@ public class FileUploadExceptionAdvice {
         redirectAttributes.addFlashAttribute("message", "Maximum upload size of " + maxSizeInMB + " exceeded");
 
         return "redirect:/api/v1/questions";
-
     }
 }

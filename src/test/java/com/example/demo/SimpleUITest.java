@@ -22,22 +22,17 @@ public class SimpleUITest {
     private static final int DELAY = 10;
     private static By TASK_NAME = By.xpath("//input[@name='taskName']");
     private static By DESCRIPTION = By.xpath("//input[@name='description']");
-    private static By SUBMIT_BUTTON = By.xpath("//input[@value='Add task']");
+    private static By ADD_QUESTION_BUTTON = By.xpath("//button[@id='button_add_question']");
     private static By DELETE_BUTTON = By.xpath("//a[contains(text(),'Delete')]");
     private static By TABLE = By.xpath("//td[contains(text(), 'Delete from list')]");
-
     private static By MAIN_PAGE_LINK_QUESTIONS = By.xpath("//a[@id='list_questions_link']");
-    private static By TABLE_TITLE = By.xpath("//h2[contains(text(),'Technical interview questions')]");
-
+    private static By TABLE_TITLE = By.xpath("//h5[contains(text(),'Technical interview questions')]");
     private static By UPLOAD_FILE = By.xpath("//input[@id='upload_file']");
-
-    private static By UPLOAD_FILE_BUTTON = By.xpath("//input[@id='upload_file_button']");
-
+    private static By UPLOAD_FILE_BUTTON = By.xpath("//button[@id='upload_file_button']");
     private static By MESSAGE = By.xpath("//h3[@id='upload_message']");
-
     private static final String TEXT = "Technical interview questions: (questions count : %s)";
-
     private static final String UPLOAD_MESSAGE = "You successfully uploaded file is: %s";
+    private static final String ERROR_UPLOAD_MESSAGE = "Maximum upload size of %s exceeded";
 
     @BeforeAll
     public static void setUp() {
@@ -62,7 +57,7 @@ public class SimpleUITest {
         webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(DELAY));
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(TASK_NAME)).sendKeys("Test1");
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(DESCRIPTION)).sendKeys("Test1");
-        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(SUBMIT_BUTTON)).click();
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(ADD_QUESTION_BUTTON)).click();
 
         assertThat(webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(TABLE_TITLE)).getText()).isEqualTo(String.format(TEXT, "1"));
     }
@@ -72,7 +67,7 @@ public class SimpleUITest {
         webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(DELAY));
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(TASK_NAME)).sendKeys("Test1");
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(DESCRIPTION)).sendKeys("Test1");
-        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(SUBMIT_BUTTON)).click();
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(ADD_QUESTION_BUTTON)).click();
 
         assertThat(webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(TABLE)).isDisplayed());
     }
@@ -92,7 +87,7 @@ public class SimpleUITest {
     }
 
     @Test
-    public void testUploadFile() {
+    public void testUploadCorrectSizeFile() {
         File file = new File("src/main/resources/upload.json");
         webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(DELAY));
         assertThat(webDriver.getTitle()).isEqualTo("Technical interview questions");
@@ -104,6 +99,18 @@ public class SimpleUITest {
         assertThat(webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(MESSAGE)).getText()).isEqualTo(String.format(UPLOAD_MESSAGE, "upload.json"));
     }
 
+    @Test
+    public void testUploadInCorrectSizeFile() {
+        File file = new File("src/main/resources/10mb-sample.json");
+        webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(DELAY));
+        assertThat(webDriver.getTitle()).isEqualTo("Technical interview questions");
+
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(UPLOAD_FILE)).sendKeys(file.getAbsolutePath());
+
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(UPLOAD_FILE_BUTTON)).click();
+
+        assertThat(webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(MESSAGE)).getText()).isEqualTo(String.format(ERROR_UPLOAD_MESSAGE, "1MB"));
+    }
 
     @AfterAll
     public static void tearDown() {

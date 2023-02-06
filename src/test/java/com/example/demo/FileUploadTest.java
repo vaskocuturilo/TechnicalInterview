@@ -32,10 +32,10 @@ public class FileUploadTest {
     private int port;
 
     @Test
-    public void testFileUpload() {
-        ClassPathResource cpr = new ClassPathResource("upload.json");
+    public void testUploadCorrectFileSize() {
+        ClassPathResource pathResource = new ClassPathResource("upload.json");
         MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-        map.add("file", cpr);
+        map.add("file", pathResource);
         ResponseEntity<String> response = this.restTemplate.postForEntity("/api/v1/questions/upload", map, String.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FOUND);
