@@ -27,7 +27,10 @@ public class SimpleUITest {
     private static By ADD_QUESTION_BUTTON = By.xpath("//input[@id='button_add_question']");
     private static By DELETE_LINK = By.xpath("//a[@id='cell_delete']");
     private static By TABLE = By.xpath("//td[contains(text(), 'Delete from list')]");
-    private static By MAIN_PAGE_LINK_QUESTIONS = By.xpath("//a[@id='list_questions_link']");
+    private static By MAIN_PAGE_LINK_QUESTIONS = By.xpath("//input[@id='list_of_questions']");
+    private static By USER_NAME = By.xpath("//input[@id='username']");
+    private static By PASSWORD = By.xpath("//input[@id='password']");
+    private static By SIGN_IN = By.xpath("//button[@type='submit']");
     private static By TOTAL_COUNT = By.xpath("//h1[@id='total_count']");
     private static By PASS_COUNT = By.xpath("//h1[@id='pass_count']");
     private static By FAIL_COUNT = By.xpath("//h1[@id='fail_count']");
@@ -49,6 +52,9 @@ public class SimpleUITest {
         webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(DELAY));
         webDriver.get("http://localhost:8080/");
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(MAIN_PAGE_LINK_QUESTIONS)).click();
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(USER_NAME)).sendKeys("user");
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(PASSWORD)).sendKeys("user");
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(SIGN_IN)).click();
     }
 
     @Test
