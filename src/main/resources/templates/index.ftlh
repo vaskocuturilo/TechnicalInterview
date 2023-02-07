@@ -23,24 +23,25 @@
     <fieldset>
         <legend><span class="number">2.</span>Sign-In</legend>
         <div style="display: inline-block; margin-left:15px">
-            <input type="submit" id="login_page" value="Sign-In"/>
+            <input type="submit" id="login_page" value="Sign-In" onclick="location.href='/login'"/>
         </div>
     </fieldset>
 </div>
-
 <div class="form-style-5">
-    <fieldset>
-        <legend><span class="number">3.</span>Sign-Up</legend>
-        <div style="display: inline-block; margin-left:15px">
-            <input type="submit" id="list_of_questions" value="Sign-up"/>
-        </div>
-    </fieldset>
+    <form action="/api/v1/register" method="GET">
+        <fieldset>
+            <legend><span class="number">3.</span>Sign-Up</legend>
+            <div style="display: inline-block; margin-left:15px">
+                <input type="submit" id="register_page" value="Sign-up"/>
+            </div>
+        </fieldset>
+    </form>
 </div>
 <div class="form-style-5">
     <fieldset>
         <legend><span class="number">4.</span>Help</legend>
         <div style="display: inline-block; margin-left:15px">
-            <input type="submit" id="list_of_questions" value="Help"/>
+            <input type="submit" id="help_page" value="Help"/>
         </div>
     </fieldset>
 </div>

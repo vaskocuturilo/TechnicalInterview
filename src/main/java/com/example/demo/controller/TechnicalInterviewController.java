@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.TechnicalInterviewEntity;
+import com.example.demo.entity.UserEntity;
 import com.example.demo.exception.StorageFileNotFoundException;
 import com.example.demo.service.TechnicalInterviewService;
 import com.example.demo.storage.StorageService;
@@ -86,7 +87,7 @@ public class TechnicalInterviewController {
         return "redirect:/api/v1/questions";
     }
 
-    @PostMapping(value = "/questions")
+    @RequestMapping(value = "/questions")
     public String addNewTechnicalInterviewTask(@ModelAttribute TechnicalInterviewEntity technicalInterviewEntity) {
         technicalInterviewService.saveTechnicalInterviewTask(technicalInterviewEntity);
 
@@ -111,5 +112,12 @@ public class TechnicalInterviewController {
     public String resetAllCompletedTechnicalInterviewTasks() {
         technicalInterviewService.resetAllCompletedTechnicalInterviewTasks();
         return "redirect:/api/v1/questions";
+    }
+
+    @GetMapping("/register")
+    public String showRegistrationForm(Model model) {
+        model.addAttribute("user", new UserEntity());
+
+        return "signup_form";
     }
 }
