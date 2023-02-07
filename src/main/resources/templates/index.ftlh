@@ -1,45 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="ISO-8859-1">
-    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
     <meta charset="UTF-8">
-    <title>Technical interview questions.</title>
-    <link rel="stylesheet" type="text/css" href="/css/style.x47307.css"/>
+    <title>Technical interview questions</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <#include "style.css">
     <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
-<div class="box-form">
-    <div class="left">
-        <div class="overlay">
-            <h1>Hello World.</h1>
-            <span>
-			<p>Open your list of questions:</p>
-			<a href="/api/v1/questions" id="list_questions_link"><i class="fa fa-twitter" aria-hidden="true"></i>The list of questions</a>
-		</span>
+<div class="form-style-5">
+    <form action="/api/v1/questions" method="GET">
+        <fieldset>
+            <legend><span class="number">1.</span>List of technical interview questions</legend>
+            <div style="display: inline-block; margin-left:15px">
+                <input type="submit" id="list_of_questions" value="List of questions."/>
+            </div>
+        </fieldset>
+    </form>
+</div>
+<div class="form-style-5">
+    <fieldset>
+        <legend><span class="number">2.</span>Sign-In</legend>
+        <div style="display: inline-block; margin-left:15px">
+            <input type="submit" id="login_page" value="Sign-In"/>
         </div>
-    </div>
-    <div class="right">
-        <h5>Login</h5>
-        <p>Don't have an account? <a href="#">Creat Your Account</a> it takes less than a minute</p>
-        <div class="inputs">
-            <input type="text" placeholder="user name">
-            <br>
-            <input type="password" placeholder="password">
-        </div>
-        <br><br>
+    </fieldset>
+</div>
 
-        <div class="remember-me--forget-password">
-            <label>
-                <input type="checkbox" name="item" checked/>
-                <span class="text-checkbox">Remember me</span>
-            </label>
-            <p>forget password?</p>
+<div class="form-style-5">
+    <fieldset>
+        <legend><span class="number">3.</span>Sign-Up</legend>
+        <div style="display: inline-block; margin-left:15px">
+            <input type="submit" id="list_of_questions" value="Sign-up"/>
         </div>
-        <br>
-        <button>Login</button>
-    </div>
+    </fieldset>
+</div>
+<div class="form-style-5">
+    <fieldset>
+        <legend><span class="number">4.</span>Help</legend>
+        <div style="display: inline-block; margin-left:15px">
+            <input type="submit" id="list_of_questions" value="Help"/>
+        </div>
+    </fieldset>
 </div>
 </body>
 </html>
