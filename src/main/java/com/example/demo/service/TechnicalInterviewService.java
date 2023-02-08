@@ -32,10 +32,10 @@ public class TechnicalInterviewService {
 
     @Transactional
     public List<TechnicalInterviewEntity> getRandomQuestion() {
-        List<TechnicalInterviewEntity> list = technicalInterviewRepository.findQuestion();
-        if (list.isEmpty() || list.size() == 0) {
-            throw new QuestionNotFoundException(notFoundInfoMessage);
-        }
+        List<TechnicalInterviewEntity> technicalInterviewEntities = technicalInterviewRepository.findQuestion();
+
+        technicalInterviewEntities.stream().findAny().orElseThrow(() -> new QuestionNotFoundException(notFoundInfoMessage));
+
         return technicalInterviewRepository.findQuestion();
     }
 
@@ -63,23 +63,35 @@ public class TechnicalInterviewService {
     @Transactional
     public void deleteTechnicalInterviewTask(final Long id) {
         Optional<TechnicalInterviewEntity> technicalInterviewEntity = technicalInterviewRepository.findById(id);
-        if (technicalInterviewEntity.isEmpty()) {
-            throw new QuestionNotFoundException(notFoundErrorMessage);
-        }
+
+        technicalInterviewEntity
+                .stream()
+                .filter(question -> question.getTaskId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new QuestionNotFoundException(notFoundErrorMessage));
+
         technicalInterviewRepository.deleteById(id);
     }
 
     @Transactional
     public void deleteTechnicalInterviewQuestions() {
-        List<TechnicalInterviewEntity> technicalInterviewEntity = technicalInterviewRepository.findAll();
-        if (technicalInterviewEntity.isEmpty()) {
-            throw new QuestionNotFoundException(notFoundErrorMessage);
-        }
+        List<TechnicalInterviewEntity> technicalInterviewEntities = technicalInterviewRepository.findAll();
+
+        technicalInterviewEntities.stream().findAny().orElseThrow(() -> new QuestionNotFoundException(notFoundErrorMessage));
+
         technicalInterviewRepository.deleteAll();
     }
 
     @Transactional
     public void completeTechnicalInterviewTask(final boolean completed, final Long id) {
+        Optional<TechnicalInterviewEntity> technicalInterviewEntity = technicalInterviewRepository.findById(id);
+
+        technicalInterviewEntity
+                .stream()
+                .filter(question -> question.getTaskId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new QuestionNotFoundException(notFoundErrorMessage));
+
         technicalInterviewRepository.setCompletedStatus(completed, id);
     }
 
