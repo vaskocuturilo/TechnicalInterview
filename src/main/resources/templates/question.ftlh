@@ -5,38 +5,52 @@
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
     <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <#include "style.css">
 </head>
 <body>
-<div class="container text-center">
+<div class="right">
     <div>
-        <h1>Your question is:</h1>
+        <form action="/api/v1/questions" method="GET">
+            <div style="display: inline-block; margin-left:15px">
+                <input type="submit" id="button_logout" value="To Main Page"/>
+            </div>
+        </form>
     </div>
-    <div>
-        <table class="table table-striped table-bordered">
-            <thead class="table-dark">
-            <tr>
-                <td>Task Name</td>
-                <td>Description</td>
-                <td>Completed</td>
-                <td>Do you complete task ?</td>
-            </tr>
-            </thead>
-            <tbody>
-            <#list randomQuestion as questions>
-                <tr>
-                    <td>${questions.taskName}</td>
-                    <td>${questions.description}</td>
-                    <td>${questions.completed?string("Yes","No")}</td>
-                    <td>
-                        <a href="${'/api/v1/complete/'+questions.taskId}">Complete</a>
-                        <br>
-                        <a href="${'/api/v1/questions'}">Not complete</a>
-                    </td>
-                </tr>
-            </#list>
-            </tbody>
-        </table>
-    </div>
+</div>
+<div class="form-style-5">
+    <fieldset>
+        <div class="container text-center">
+            <div>
+                <h1>Your question is:</h1>
+            </div>
+            <div>
+                <table class="table table-striped table-bordered">
+                    <thead class="table-dark">
+                    <tr>
+                        <td>Title</td>
+                        <td>Description</td>
+                        <td>Completed</td>
+                        <td>Do you complete a question?</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <#list randomQuestion as questions>
+                        <tr>
+                            <td>${questions.taskName}</td>
+                            <td>${questions.description}</td>
+                            <td>${questions.completed?string("Yes","No")}</td>
+                            <td>
+                                <a href="${'/api/v1/complete/'+questions.taskId}">Complete</a>
+                                <br>
+                                <a href="${'/api/v1/questions'}">Not complete</a>
+                            </td>
+                        </tr>
+                    </#list>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </fieldset>
 </div>
 </body>
 </html>

@@ -70,6 +70,15 @@ public class TechnicalInterviewService {
     }
 
     @Transactional
+    public void deleteTechnicalInterviewQuestions() {
+        List<TechnicalInterviewEntity> technicalInterviewEntity = technicalInterviewRepository.findAll();
+        if (technicalInterviewEntity.isEmpty()) {
+            throw new QuestionNotFoundException(notFoundErrorMessage);
+        }
+        technicalInterviewRepository.deleteAll();
+    }
+
+    @Transactional
     public void completeTechnicalInterviewTask(final boolean completed, final Long id) {
         technicalInterviewRepository.setCompletedStatus(completed, id);
     }

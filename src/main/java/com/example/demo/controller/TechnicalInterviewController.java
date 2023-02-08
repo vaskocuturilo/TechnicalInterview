@@ -80,6 +80,13 @@ public class TechnicalInterviewController {
         return "redirect:/api/v1/questions";
     }
 
+    @RequestMapping(value = "/questions/delete/all")
+    public String deleteTechnicalInterviewQuestions() {
+        technicalInterviewService.deleteTechnicalInterviewQuestions();
+
+        return "redirect:/api/v1/questions";
+    }
+
     @RequestMapping(value = "/complete/{id}")
     public String completeTechnicalInterviewTask(@PathVariable Long id) {
         technicalInterviewService.completeTechnicalInterviewTask(true, id);
