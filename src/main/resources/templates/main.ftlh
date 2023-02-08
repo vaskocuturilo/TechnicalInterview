@@ -93,26 +93,26 @@
         <legend><span class="number">4.</span>List of technical interview questions:</legend>
         <div class="container text-center">
             <div>
-                <table class="table table-striped table-bordered">
+                <table class="table table-striped table-bordered" id="main_table">
                     <thead class="table-dark">
                     <tr>
-                        <td>Task Name</td>
+                        <td>Title</td>
                         <td>Description</td>
                         <td>Completed</td>
-                        <td>Edit task</td>
-                        <td>Complete task</td>
-                        <td>Delete from list</td>
+                        <td>Edit question</td>
+                        <td>Complete question</td>
+                        <td>Delete</td>
                     </tr>
                     </thead>
                     <tbody>
-                    <#list entityList as task>
+                    <#list entityList as questions>
                         <tr>
-                            <td><#if task.taskName??>${task.taskName}</#if></td>
-                            <td><#if task.description??>${task.description}</#if></td>
-                            <td><#if task.completed??>${task.completed?string("Pass","Fail")}</#if></td>
-                            <td><a href="${'/api/v1/edit/'+task.taskId}" id="cell_edit">Edit</a></td>
-                            <td><a href="${'/api/v1/complete/'+task.taskId}" id="cell_complete">Complete</a></td>
-                            <td><a href="${'/api/v1/delete/'+task.taskId}" id="cell_delete"
+                            <td><#if questions.taskName??>${questions.taskName}</#if></td>
+                            <td><#if questions.description??>${questions.description}</#if></td>
+                            <td><#if questions.completed??>${questions.completed?string("Pass","Fail")}</#if></td>
+                            <td><a href="${'/api/v1/edit/'+questions.taskId}" id="cell_edit">Edit</a></td>
+                            <td><a href="${'/api/v1/complete/'+questions.taskId}" id="cell_complete">Complete</a></td>
+                            <td><a href="${'/api/v1/delete/'+questions.taskId}" id="cell_delete"
                                    onclick="return confirm('Are you sure?')">Delete</a>
                             </td>
                         </tr>
@@ -141,9 +141,10 @@
             </form>
         </div>
         <div style="display: inline-block; margin-right:0px">
-            <form action="#" method="#">
-                <div style="display: inline-block; margin-left:15px">
-                    <input type="submit" class="btn btn-primary" id="delete_button" value="Delete all questions"/>
+            <form action="/api/v1/questions/delete/all" method="POST">
+                <div style="display: inline-block; margin-left:15px">"
+                    <input type="submit" class="btn btn-primary" id="delete_button" value="Delete all questions"
+                           onclick="return confirm('Are you sure?')"/>
                 </div>
             </form>
         </div>

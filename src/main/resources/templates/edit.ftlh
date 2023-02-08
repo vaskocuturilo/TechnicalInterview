@@ -6,32 +6,44 @@
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
     <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <#include "style.css">
 </head>
 <body>
-<h1>Edit Technical interview questions.</h1>
-<form action="${'/api/v1/edit/'+id}" method="PUT">
-    <table border="1px" id="table_edit_task">
-        <tr>
-            <td>
-                <label id="id_label">id: </label>
-                <input type="text" id="id_input" name="id" value="${id}" required
-                       minlength="1" maxlength="255">
-            </td>
-            <td>
-                <label id="task_name_label">Task name: </label>
-                <input type="text" id="task_name_input" name="taskName"
-                       required minlength="1"
-                       maxlength="255">
-            </td>
-            <td>
-                <label id="description_label">Description:</label>
-                <input type="text" id="description_input" name="description" required minlength="1" maxlength="255">
-            </td>
-            <td>
-                <input type="submit" id="add_task_button" value="Add task">
-            </td>
-        </tr>
-    </table>
-</form>
+<div class="right">
+    <div>
+        <form action="/api/v1/questions" method="GET">
+            <div style="display: inline-block; margin-left:15px">
+                <input type="submit" id="button_logout" value="To Main Page"/>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="container text-center">
+    <h1>Edit technical interview question:</h1>
+</div>
+<div class="form-style-5">
+    <fieldset>
+        <form action="${'/api/v1/edit/'+id}" method="PUT">
+            <fieldset>
+                <legend><span class="number">INFO</span>Edit technical interview question:</legend>
+                <div style="display: inline-block;">
+                    <strong><label class="formSpacing" for="job" id="label_title">Title of question:</label></strong>
+                    <input class="inputWidth1" type="text" id="task_name_input" name="taskName" required
+                           minlength="1"
+                           maxlength="255" placeholder="Title of question *">
+                </div>
+                <div style="display: inline-block; margin-left:20px">
+                    <strong><label class="formSpacing" for="job" id="label_description">Description of question:</label></strong>
+                    <input class="inputWidth1" type="text" id="description_input" name="description" required
+                           minlength="1"
+                           maxlength="255" placeholder="Description of question *">
+                </div>
+                <div style="display: inline-block; margin-left:15px">
+                    <input type="submit" id="button_add_question" value="Add question"/>
+                </div>
+            </fieldset>
+        </form>
+    </fieldset>
+</div>
 </body>
 </html>

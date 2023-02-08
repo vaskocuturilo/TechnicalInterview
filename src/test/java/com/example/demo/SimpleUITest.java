@@ -5,16 +5,14 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
 import java.time.Duration;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -26,7 +24,8 @@ public class SimpleUITest {
     private static By DESCRIPTION = By.xpath("//input[@name='description']");
     private static By ADD_QUESTION_BUTTON = By.xpath("//input[@id='button_add_question']");
     private static By DELETE_LINK = By.xpath("//a[@id='cell_delete']");
-    private static By TABLE = By.xpath("//td[contains(text(), 'Delete from list')]");
+    private static By DELETE_BUTTON = By.xpath("//input[@id='delete_button']");
+    private static By TABLE = By.xpath("//table[@id='main_table']");
     private static By MAIN_PAGE_LINK_QUESTIONS = By.xpath("//input[@id='list_of_questions']");
     private static By USER_NAME = By.xpath("//input[@id='username']");
     private static By PASSWORD = By.xpath("//input[@id='password']");
@@ -37,6 +36,7 @@ public class SimpleUITest {
     private static By UPLOAD_FILE = By.xpath("//input[@id='upload_file']");
     private static By UPLOAD_FILE_BUTTON = By.xpath("//input[@id='upload_questions']");
     private static By COMPLETE_CELL = By.xpath("//table[@class='table table-striped table-bordered']//td[contains(text(),'Test complete')]/following-sibling::td//a[@id='cell_complete']");
+    private static By TABLE_LIST = By.xpath("//table[@id='main_table']//tbody/tr");
     private static By MESSAGE = By.xpath("//p[@id='info_message']");
     private static final String UPLOAD_MESSAGE = "You successfully uploaded file is: %s";
     private static final String ERROR_UPLOAD_MESSAGE = "Maximum upload size of %s exceeded";
@@ -125,6 +125,24 @@ public class SimpleUITest {
     }
 
     @Test
+    public void testDeleteAllElementsFromTable() {
+        webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(DELAY));
+        assertThat(webDriver.getTitle()).isEqualTo("Technical interview questions");
+
+        assertThat(webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(TABLE)).isDisplayed());
+
+        assertThat(convertListToLocator(TABLE_LIST).size()).isNotEqualTo(0);
+
+        scrollPage();
+        waiter(3000);
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(DELETE_BUTTON)).click();
+        Alert alert = webDriver.switchTo().alert();
+        alert.accept();
+
+        assertThat(Integer.parseInt(webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(TOTAL_COUNT)).getText())).isEqualTo(0);
+    }
+
+    @Test
     public void testUploadCorrectSizeFile() {
         File file = new File("src/main/resources/upload.json");
         webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(DELAY));
@@ -168,5 +186,9 @@ public class SimpleUITest {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private List<WebElement> convertListToLocator(By locator) {
+        return webDriver.findElements(locator);
     }
 }
