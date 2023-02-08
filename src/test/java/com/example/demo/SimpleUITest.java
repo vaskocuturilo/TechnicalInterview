@@ -25,6 +25,7 @@ public class SimpleUITest {
     private static By ADD_QUESTION_BUTTON = By.xpath("//input[@id='button_add_question']");
     private static By DELETE_LINK = By.xpath("//a[@id='cell_delete']");
     private static By DELETE_BUTTON = By.xpath("//input[@id='delete_button']");
+    private static By RESET_ALL_BUTTON = By.xpath("//input[@id='reset_button']");
     private static By TABLE = By.xpath("//table[@id='main_table']");
     private static By MAIN_PAGE_LINK_QUESTIONS = By.xpath("//input[@id='list_of_questions']");
     private static By USER_NAME = By.xpath("//input[@id='username']");
@@ -134,7 +135,7 @@ public class SimpleUITest {
         assertThat(convertListToLocator(TABLE_LIST).size()).isNotEqualTo(0);
 
         scrollPage();
-        waiter(3000);
+        waiter(1000);
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(DELETE_BUTTON)).click();
         Alert alert = webDriver.switchTo().alert();
         alert.accept();
@@ -166,6 +167,30 @@ public class SimpleUITest {
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(UPLOAD_FILE_BUTTON)).click();
 
         assertThat(webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(MESSAGE)).getText()).isEqualTo(String.format(ERROR_UPLOAD_MESSAGE, "1MB"));
+    }
+
+    @Test
+    public void testResetAllTechnicalInterviewQuestions() {
+        File file = new File("src/main/resources/upload.json");
+        webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(DELAY));
+        assertThat(webDriver.getTitle()).isEqualTo("Technical interview questions");
+
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(UPLOAD_FILE)).sendKeys(file.getAbsolutePath());
+
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(UPLOAD_FILE_BUTTON)).click();
+
+        Integer count = Integer.parseInt(webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(FAIL_COUNT)).getText());
+
+        assertThat(convertListToLocator(TABLE_LIST).size()).isNotEqualTo(0);
+        assertThat(count).isNotEqualTo(0);
+
+        scrollPage();
+        waiter(1000);
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(RESET_ALL_BUTTON)).click();
+        Alert alert = webDriver.switchTo().alert();
+        alert.accept();
+
+        assertThat(Integer.parseInt(webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(FAIL_COUNT)).getText())).isNotEqualTo(0);
     }
 
     @AfterAll

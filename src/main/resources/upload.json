@@ -10,7 +10,7 @@
     "taskName": "Upload 2"
   },
   {
-    "completed": "true",
+    "completed": "false",
     "description": "Upload 3",
     "taskName": "Upload 3"
   }

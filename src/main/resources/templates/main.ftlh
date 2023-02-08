@@ -136,13 +136,14 @@
         <div style="display: inline-block; margin-right:0px">
             <form action="/api/v1/reset" method="GET">
                 <div style="display: inline-block; margin-left:15px">
-                    <input type="submit" class="btn btn-primary" id="reset_button" value="Reset all questions"/>
+                    <input type="submit" class="btn btn-primary" id="reset_button" value="Reset all questions"
+                           onclick="return confirm('Are you sure?')"/>
                 </div>
             </form>
         </div>
         <div style="display: inline-block; margin-right:0px">
             <form action="/api/v1/questions/delete/all" method="POST">
-                <div style="display: inline-block; margin-left:15px">"
+                <div style="display: inline-block; margin-left:15px">
                     <input type="submit" class="btn btn-primary" id="delete_button" value="Delete all questions"
                            onclick="return confirm('Are you sure?')"/>
                 </div>
