@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.entity.TechnicalInterviewEntity;
 import com.example.demo.exception.QuestionNotFoundException;
 import com.example.demo.repository.TechnicalInterviewRepository;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Log4j2
 public class TechnicalInterviewService {
 
     final TechnicalInterviewRepository technicalInterviewRepository;
@@ -34,7 +36,11 @@ public class TechnicalInterviewService {
     public List<TechnicalInterviewEntity> getRandomQuestion() {
         List<TechnicalInterviewEntity> technicalInterviewEntities = technicalInterviewRepository.findQuestion();
 
-        technicalInterviewEntities.stream().findAny().orElseThrow(() -> new QuestionNotFoundException(notFoundInfoMessage));
+        technicalInterviewEntities.stream().findAny().orElseThrow(() -> {
+            QuestionNotFoundException questionNotFoundException = new QuestionNotFoundException(notFoundInfoMessage);
+            log.debug("The list of questions were not found." + questionNotFoundException.getMessage());
+            return questionNotFoundException;
+        });
 
         return technicalInterviewRepository.findQuestion();
     }
@@ -50,8 +56,8 @@ public class TechnicalInterviewService {
                 .ifPresent(question -> {
                     question.setTaskName(technicalInterviewEntity.getTaskName());
                     question.setDescription(technicalInterviewEntity.getDescription());
-
                     technicalInterviewRepository.save(question);
+                    log.info("The questions were save");
                 });
     }
 
@@ -68,7 +74,11 @@ public class TechnicalInterviewService {
                 .stream()
                 .filter(question -> question.getTaskId().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new QuestionNotFoundException(notFoundErrorMessage));
+                .orElseThrow(() -> {
+                    QuestionNotFoundException questionNotFoundException = new QuestionNotFoundException(notFoundErrorMessage);
+                    log.debug("The question with id = " + id + " not found." + questionNotFoundException.getMessage());
+                    return questionNotFoundException;
+                });
 
         technicalInterviewRepository.deleteById(id);
     }
@@ -77,7 +87,11 @@ public class TechnicalInterviewService {
     public void deleteTechnicalInterviewQuestions() {
         List<TechnicalInterviewEntity> technicalInterviewEntities = technicalInterviewRepository.findAll();
 
-        technicalInterviewEntities.stream().findAny().orElseThrow(() -> new QuestionNotFoundException(notFoundErrorMessage));
+        technicalInterviewEntities.stream().findAny().orElseThrow(() -> {
+            QuestionNotFoundException questionNotFoundException = new QuestionNotFoundException(notFoundErrorMessage);
+            log.debug("The questions were not found" + questionNotFoundException.getMessage());
+            return questionNotFoundException;
+        });
 
         technicalInterviewRepository.deleteAll();
     }
@@ -90,7 +104,12 @@ public class TechnicalInterviewService {
                 .stream()
                 .filter(question -> question.getTaskId().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new QuestionNotFoundException(notFoundErrorMessage));
+                .orElseThrow(
+                        () -> {
+                            QuestionNotFoundException questionNotFoundException = new QuestionNotFoundException(notFoundErrorMessage);
+                            log.debug("The question with id = " + id + " not found." + questionNotFoundException.getMessage());
+                            return questionNotFoundException;
+                        });
 
         technicalInterviewRepository.setCompletedStatus(completed, id);
     }
@@ -98,6 +117,7 @@ public class TechnicalInterviewService {
     @Transactional
     public void resetAllCompletedTechnicalInterviewTasks() {
         technicalInterviewRepository.resetAllCompleted();
+        log.debug("The method resetAllCompletedTechnicalInterviewTasks is done.");
     }
 
     @Transactional
