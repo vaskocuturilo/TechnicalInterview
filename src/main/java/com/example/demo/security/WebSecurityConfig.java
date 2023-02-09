@@ -2,6 +2,7 @@ package com.example.demo.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -19,10 +20,17 @@ public class WebSecurityConfig {
                 User.withDefaultPasswordEncoder()
                         .username("user")
                         .password("user")
+                        .roles("USER")
+                        .build();
+
+        UserDetails admin =
+                User.withDefaultPasswordEncoder()
+                        .username("admin")
+                        .password("admin")
                         .roles("ADMIN")
                         .build();
 
-        return new InMemoryUserDetailsManager(user);
+        return new InMemoryUserDetailsManager(user, admin);
     }
 
     @Bean
@@ -30,10 +38,16 @@ public class WebSecurityConfig {
         http
                 .csrf().disable()
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/api/v1/questions").authenticated().anyRequest().permitAll())
+                        .requestMatchers(HttpMethod.POST, "/api/v1/questions/upload").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/questions/delete/all").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/random").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/reset").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/edit/").hasRole("ADMIN")
+                        .requestMatchers("/**")
+                        .authenticated().anyRequest().permitAll())
                 .formLogin((form) -> form
                         .usernameParameter("email")
-                        .defaultSuccessUrl("/api/v1/questions")
+                        .defaultSuccessUrl("/api/v1/**")
                         .permitAll())
                 .logout((logout) -> logout.logoutSuccessUrl("/").permitAll());
 

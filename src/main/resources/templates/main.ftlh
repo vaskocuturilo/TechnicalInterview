@@ -142,7 +142,7 @@
             </form>
         </div>
         <div style="display: inline-block; margin-right:0px">
-            <form action="/api/v1/questions/delete/all" method="POST">
+            <form action="/api/v1/questions/delete/all" method="GET">
                 <div style="display: inline-block; margin-left:15px">
                     <input type="submit" class="btn btn-primary" id="delete_button" value="Delete all questions"
                            onclick="return confirm('Are you sure?')"/>

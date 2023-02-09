@@ -18,7 +18,7 @@
 <div class="form-style-5">
     <form id="myForm" action="#" method="POST">
         <fieldset>
-            <legend><span class="number">INF</span> User Registration - Sign Up</legend>
+            <legend><span class="number">INF</span> Please Sign Up</legend>
             <div style="display: inline-block;">
                 <strong><label class="formSpacing" for="job">User Name:</label></strong>
                 <input class="inputWidth1" type="text" name="first_name" id="first_name" minlength="1"
@@ -40,7 +40,7 @@
         </fieldset>
     </form>
     <div style="display: inline-block; margin-left:15px">
-        <input type="submit" value="Register" onclick="return confirm('This functionality is not ready yet')">
+        <input type="submit" value="Sign Up" onclick="return confirm('This functionality is not ready yet')">
     </div>
     <div style="display: inline-block; margin-left:85px">
         <input type="button" value=" Clear " onClick="clearForm()">
