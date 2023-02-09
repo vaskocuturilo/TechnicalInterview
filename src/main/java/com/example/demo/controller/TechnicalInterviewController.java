@@ -80,7 +80,7 @@ public class TechnicalInterviewController {
         return "redirect:/api/v1/questions";
     }
 
-    @RequestMapping(value = "/questions/delete/all")
+    @GetMapping(value = "/questions/delete/all")
     public String deleteTechnicalInterviewQuestions() {
         technicalInterviewService.deleteTechnicalInterviewQuestions();
 
@@ -115,7 +115,7 @@ public class TechnicalInterviewController {
         return "redirect:/api/v1/questions";
     }
 
-    @RequestMapping("/reset")
+    @GetMapping("/reset")
     public String resetAllCompletedTechnicalInterviewTasks() {
         technicalInterviewService.resetAllCompletedTechnicalInterviewTasks();
         return "redirect:/api/v1/questions";
