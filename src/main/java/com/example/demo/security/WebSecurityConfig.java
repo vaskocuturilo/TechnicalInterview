@@ -38,19 +38,27 @@ public class WebSecurityConfig {
         http
                 .csrf().disable()
                 .authorizeHttpRequests((requests) -> requests
+                        .requestMatchers("/").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/register").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/process_register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/questions/upload").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/v1/questions/delete/all").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/v1/random").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/v1/reset").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/v1/edit/").hasRole("ADMIN")
-                        .requestMatchers("/**")
-                        .authenticated().anyRequest().permitAll())
+                        .anyRequest().authenticated())
                 .formLogin((form) -> form
-                        .usernameParameter("email")
+                        .usernameParameter("username")
+                        .passwordParameter("password")
                         .defaultSuccessUrl("/api/v1/**")
                         .permitAll())
-                .logout((logout) -> logout.logoutSuccessUrl("/").permitAll());
-
+                .rememberMe((remember) -> remember.alwaysRemember(false))
+                .logout((logout) -> logout
+                        .logoutUrl("/logout")
+                        .clearAuthentication(true)
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID", "remember-me")
+                        .logoutSuccessUrl("/"));
         return http.build();
     }
 }
