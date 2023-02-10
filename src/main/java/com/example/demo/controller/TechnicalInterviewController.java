@@ -4,6 +4,7 @@ import com.example.demo.entity.TechnicalInterviewEntity;
 import com.example.demo.entity.UserEntity;
 import com.example.demo.exception.StorageFileNotFoundException;
 import com.example.demo.service.TechnicalInterviewService;
+import com.example.demo.service.UserEntityService;
 import com.example.demo.storage.StorageService;
 import com.example.demo.upload.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,15 +21,16 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class TechnicalInterviewController {
     private final TechnicalInterviewService technicalInterviewService;
-
+    private final UserEntityService userEntityService;
     private final StorageService storageService;
     private final UploadService uploadService;
     @Value("${storage.error.message}")
     private String storageNotFoundErrorMessage;
 
     @Autowired
-    public TechnicalInterviewController(TechnicalInterviewService technicalInterviewService, StorageService storageService, UploadService uploadService) {
+    public TechnicalInterviewController(TechnicalInterviewService technicalInterviewService, UserEntityService userEntityService, StorageService storageService, UploadService uploadService) {
         this.technicalInterviewService = technicalInterviewService;
+        this.userEntityService = userEntityService;
         this.storageService = storageService;
         this.uploadService = uploadService;
     }
@@ -94,7 +96,7 @@ public class TechnicalInterviewController {
         return "redirect:/api/v1/questions";
     }
 
-    @RequestMapping(value = "/questions")
+    @PostMapping(value = "/questions")
     public String addNewTechnicalInterviewTask(@ModelAttribute TechnicalInterviewEntity technicalInterviewEntity) {
         technicalInterviewService.saveTechnicalInterviewTask(technicalInterviewEntity);
 
@@ -126,5 +128,12 @@ public class TechnicalInterviewController {
         model.addAttribute("user", new UserEntity());
 
         return "signup_form";
+    }
+
+    @PostMapping("/process_register")
+    public String processRegister(@ModelAttribute UserEntity userEntity) {
+        userEntityService.registerUser(userEntity);
+
+        return "register_success";
     }
 }
