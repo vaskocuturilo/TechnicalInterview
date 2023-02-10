@@ -1,10 +1,12 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.TechnicalInterviewEntity;
+import com.example.demo.entity.UserEntity;
 import com.example.demo.exception.QuestionNotFoundException;
 import com.example.demo.repository.TechnicalInterviewRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -16,35 +16,35 @@
 </head>
 <body>
 <div class="form-style-5">
-    <form id="myForm" action="#" method="POST">
+    <form action="/api/v1/process_register" method="POST">
         <fieldset>
             <legend><span class="number">INF</span> Please Sign Up</legend>
             <div style="display: inline-block;">
-                <strong><label class="formSpacing" for="job">User Name:</label></strong>
-                <input class="inputWidth1" type="text" name="first_name" id="first_name" minlength="1"
-                       maxlength="25" placeholder="User Name *">
+                <strong><label class="formSpacing" for="job">Email:</label></strong>
+                <input class="inputWidth1" type="text" name="email" id="email" minlength="1"
+                       maxlength="25" placeholder="User Name *" required>
             </div>
             <div style="display: inline-block; margin-left:20px">
                 <strong><label for="job">Password:</label></strong>
                 <input class="inputWidth1" type="password" name="password" id="password" minlength="1"
-                       maxlength="25" placeholder="Password">
+                       maxlength="25" placeholder="Password" required>
             </div>
             <div style="display: inline-block;">
                 <label class="formSpacing" for="gender">Gender</label>
-                <select id="gender" name="Gender" required>
+                <select id="gender" name="gender" required>
                     <option value="">Select a Gender *</option>
                     <option value="PCP">Male</option>
                     <option value="Pediatrics">Female</option>
                 </select>
             </div>
         </fieldset>
+        <div style="display: inline-block; margin-left:15px">
+            <input type="submit" value="Sign Up">
+        </div>
+        <div style="display: inline-block; margin-left:85px">
+            <input type="button" value=" Clear " onClick="clearForm()">
+        </div>
     </form>
-    <div style="display: inline-block; margin-left:15px">
-        <input type="submit" value="Sign Up" onclick="return confirm('This functionality is not ready yet')">
-    </div>
-    <div style="display: inline-block; margin-left:85px">
-        <input type="button" value=" Clear " onClick="clearForm()">
-    </div>
 </div>
 </body>
 </html>
