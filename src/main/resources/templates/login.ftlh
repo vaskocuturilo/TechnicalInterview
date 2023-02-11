@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Technical interview questions</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <#include "style.css">
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="form-style-5">
+    <fieldset>
+        <legend><span class="number">INF</span> Please sign in</legend>
+        <div style="display: inline-block;">
+            <strong><label class="formSpacing" for="job">Email:</label></strong>
+            <input class="inputWidth1" type="text" name="email" id="email" minlength="1"
+                   maxlength="25" placeholder="User Name *" required>
+        </div>
+        <div style="display: inline-block; margin-left:20px">
+            <strong><label for="job">Password:</label></strong>
+            <input class="inputWidth1" type="password" name="password" id="password" minlength="1"
+                   maxlength="25" placeholder="Password" required>
+        </div>
+    </fieldset>
+    <p><input type="checkbox" name="remember-me"> Remember me on this computer.</p>
+    <div style="display: inline-block; margin-left:15px">
+        <input type="submit" value="sign in">
+    </div>
+</div>
+</body>
+</html>
