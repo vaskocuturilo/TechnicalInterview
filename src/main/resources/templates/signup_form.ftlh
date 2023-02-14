@@ -22,11 +22,12 @@
             <div style="display: inline-block;">
                 <strong><label class="formSpacing" for="job">Email:</label></strong>
                 <input class="inputWidth1" type="text" name="email" id="email" minlength="1"
-                       maxlength="25" placeholder="User Name *" required>
+                       maxlength="25" placeholder="User Name *"
+                       pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$" required/>
             </div>
             <div style="display: inline-block; margin-left:20px">
                 <strong><label for="job">Password:</label></strong>
-                <input class="inputWidth1" type="password" name="password" id="password" minlength="1"
+                <input class="inputWidth1" type="password" name="password" id="password" minlength="6"
                        maxlength="25" placeholder="Password" required>
             </div>
             <div style="display: inline-block;">
