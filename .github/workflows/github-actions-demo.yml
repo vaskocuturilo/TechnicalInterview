@@ -34,10 +34,23 @@ jobs:
       - name: Run docker-compose
         run: docker-compose up -d --build
 
-      - name: Sleep for 15 seconds
-        uses: jakejarvis/wait-action@master
-        with:
-          time: '15s'
+      - name: Installed package list
+        run: apt list --installed
+      - name: Remove Chrome
+        run: sudo apt purge google-chrome-stable
+
+      - name: Remove default Chromium
+        run: sudo apt purge chromium-browser
+
+      - name: Install a new Chromium
+        run: sudo apt install -y chromium-browser
+
+      - uses: actions/checkout@v2
+      - uses: nanasess/setup-chromedriver@v1
+      - run: |
+          export DISPLAY=:99
+          chromedriver --url-base=/wd/hub &
+          sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 & # optional
 
       - name: Run automation scripts.
         run: gradle build clean test
