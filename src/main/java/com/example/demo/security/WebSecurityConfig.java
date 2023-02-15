@@ -39,6 +39,7 @@ public class WebSecurityConfig {
                 .csrf().disable()
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/").permitAll()
+                        .requestMatchers("/api/v1/create").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/process_register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/questions/upload").hasRole("ADMIN")
