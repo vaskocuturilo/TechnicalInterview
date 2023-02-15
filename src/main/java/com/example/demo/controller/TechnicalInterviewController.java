@@ -11,8 +11,6 @@ import com.example.demo.upload.UploadService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,17 +30,18 @@ public class TechnicalInterviewController {
     private final StorageService storageService;
     private final UploadService uploadService;
 
-    private OneTimePasswordService oneTimePAsswordService;
+    private final OneTimePasswordService oneTimePasswordService;
 
     @Value("${storage.error.message}")
     private String storageNotFoundErrorMessage;
 
     @Autowired
-    public TechnicalInterviewController(TechnicalInterviewService technicalInterviewService, UserEntityService userEntityService, StorageService storageService, UploadService uploadService) {
+    public TechnicalInterviewController(TechnicalInterviewService technicalInterviewService, UserEntityService userEntityService, StorageService storageService, UploadService uploadService, OneTimePasswordService oneTimePasswordService) {
         this.technicalInterviewService = technicalInterviewService;
         this.userEntityService = userEntityService;
         this.storageService = storageService;
         this.uploadService = uploadService;
+        this.oneTimePasswordService = oneTimePasswordService;
     }
 
     @GetMapping("")
@@ -145,16 +144,5 @@ public class TechnicalInterviewController {
         userEntityService.registerUser(userEntity);
 
         return "register_success";
-    }
-
-    @GetMapping("/create")
-    private Object getOneTimePassword() {
-        try {
-            log.info(NEW_ONE_TIME_PASSWORD_CODE, oneTimePAsswordService.returnOneTimePassword().getOneTimePasswordCode());
-            log.info(EXPIRE_DATA, oneTimePAsswordService.returnOneTimePassword().getExpires());
-            return ResponseEntity.status(HttpStatus.CREATED).body(oneTimePAsswordService.returnOneTimePassword());
-        } catch (Exception exception) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST);
-        }
     }
 }
