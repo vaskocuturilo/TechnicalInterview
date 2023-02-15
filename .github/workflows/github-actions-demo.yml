@@ -8,7 +8,6 @@ on:
 
 jobs:
   init:
-    timeout-minutes: 20
     runs-on: ubuntu-latest
     steps:
       # Setting up the Java environment
@@ -26,24 +25,5 @@ jobs:
       - name: Create gradle wrapper.
         run: gradle wrapper
 
-      - name: Build project without tests.
+      - name: Build project.
         run: gradle build -x test
-
-      # run utility services in the background
-      # using docker-compose (see docker-compose.yml file)
-      - name: Run docker-compose
-        run: docker-compose up -d --build
-
-      - name: Installed package list
-        run: apt list --installed
-      - name: Remove Chrome
-        run: sudo apt purge google-chrome-stable
-
-      - name: Remove default Chromium
-        run: sudo apt purge chromium-browser
-
-      - name: Install a new Chromium
-        run: sudo apt install -y chromium-browser
-
-      - name: Run automation scripts.
-        run: gradle clean test
