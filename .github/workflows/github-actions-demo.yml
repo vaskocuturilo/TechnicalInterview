@@ -8,6 +8,7 @@ on:
 
 jobs:
   init:
+    timeout-minutes: 20
     runs-on: ubuntu-latest
     steps:
       # Setting up the Java environment
@@ -28,8 +29,15 @@ jobs:
       - name: Build project without tests.
         run: gradle build -x test
 
-      - name: Run docker compose up.
-        run: docker-compose up --build
+      # run utility services in the background
+      # using docker-compose (see docker-compose.yml file)
+      - name: Run docker-compose
+        run: docker-compose up -d --build
+
+      - name: Sleep for 15 seconds
+        uses: jakejarvis/wait-action@master
+        with:
+          time: '15s'
 
       - name: Run automation scripts.
         run: gradle build clean test
