@@ -34,9 +34,19 @@ jobs:
       - name: Run docker-compose
         run: docker-compose up -d --build
 
-      - uses: actions/checkout@master
-      - run: sudo apt-fast install -y google-chrome
-      - uses: nanasess/setup-chromedriver@master
+      - name: Installed package list
+        run: apt list --installed
+      - name: Remove Chrome
+        run: sudo apt purge google-chrome-stable
+
+      - name: Remove default Chromium
+        run: sudo apt purge chromium-browser
+
+      - name: Install a new Chromium
+        run: sudo apt install -y chromium-browser
+
+      - uses: actions/checkout@v2
+      - uses: nanasess/setup-chromedriver@v1
 
       - name: Run automation scripts.
         run: gradle clean test
