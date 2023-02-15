@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -49,12 +50,21 @@ public class SimpleUITest {
 
     @BeforeEach
     public void setUpDriver() {
-        webDriver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless");
+        options.addArguments("--disable-gpu");
+        options.addArguments("--window-size=1920,1200");
+        options.addArguments("--ignore-certificate-errors");
+        options.addArguments("--disable-extensions");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+
+        webDriver = new ChromeDriver(options);
         webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(DELAY));
         webDriver.get("http://localhost:8080/");
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(MAIN_PAGE_LINK_QUESTIONS)).click();
-        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(USER_NAME)).sendKeys("user");
-        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(PASSWORD)).sendKeys("user");
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(USER_NAME)).sendKeys("admin");
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(PASSWORD)).sendKeys("admin");
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(SIGN_IN)).click();
     }
 
