@@ -25,14 +25,12 @@ jobs:
       - name: Create gradle wrapper.
         run: gradle wrapper
 
-      - name: Build project.
+      - name: Build project without tests.
         run: gradle build -x test
 
-      - name: Run docker compose up
-        run: gradle build -x test
+      - name: Run docker compose up.
+        run: docker-compose up --build
 
       - name: Run automation scripts.
         run: gradle build clean test
 
-      - name: Run docker compose up
-        run: docker-compose up --build
