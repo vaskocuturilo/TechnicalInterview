@@ -36,3 +36,6 @@ logfile.log
 
 ### VS Code ###
 .vscode/
+
+### Env variables ###
+.env
