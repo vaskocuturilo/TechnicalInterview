@@ -2,12 +2,14 @@ version: "3.8"
 services:
   mysqldb:
     image: mysql:8.0
+    restart: always
+    ports:
+      - 3307:3306
     networks:
       - demo_springboot-mysql-net
     env_file:
       - .env
 
-    restart: always
     healthcheck:
       test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
       timeout: 20s
