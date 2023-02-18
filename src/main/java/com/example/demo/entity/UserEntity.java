@@ -17,6 +17,7 @@ public class UserEntity {
     private String email;
     private String password;
     private String gender;
+    private boolean isActive;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(

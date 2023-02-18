@@ -42,7 +42,7 @@ public class WebSecurityConfig {
         return authProvider;
     }
 
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(authenticationProvider());
     }
 
@@ -52,6 +52,7 @@ public class WebSecurityConfig {
                 .csrf().disable()
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/").permitAll()
+                        .requestMatchers("/api/v1/admin/users").hasAnyAuthority("ADMIN")
                         .requestMatchers("/api/v1/create").hasAnyAuthority("GUEST", "CREATOR", "EDITOR", "ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/v1/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/process_register").permitAll()
@@ -73,6 +74,7 @@ public class WebSecurityConfig {
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID", "remember-me")
                         .logoutSuccessUrl("/"));
+
         return http.build();
     }
 }

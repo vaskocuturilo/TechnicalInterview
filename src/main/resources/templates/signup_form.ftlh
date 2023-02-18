@@ -34,8 +34,8 @@
                 <label class="formSpacing" for="gender">Gender</label>
                 <select id="gender" name="gender" required>
                     <option value="">Select a Gender *</option>
-                    <option value="PCP">Male</option>
-                    <option value="Pediatrics">Female</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
                 </select>
             </div>
         </fieldset>
