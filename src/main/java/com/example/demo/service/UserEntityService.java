@@ -11,7 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Log4j2
@@ -32,7 +32,11 @@ public class UserEntityService {
     @Transactional
     public void registerUser(final UserEntity userEntity) {
         RoleEntity role = new RoleEntity();
-        role.setName("GUEST");
+        if (userEntity.getEmail().contains("admin")) {
+            role.setName("ADMIN");
+        } else {
+            role.setName("GUEST");
+        }
         UserEntity user = userEntityRepository.findByEmail(userEntity.getEmail());
         if (user != null) {
             throw new UserFoundException(String.format(infoMessage, userEntity.getEmail()));
@@ -43,6 +47,16 @@ public class UserEntityService {
         userEntity.setPassword(encodedPassword);
 
         userEntity.setRoles(Set.of(role));
+        userEntity.setActive(false);
         userEntityRepository.save(userEntity);
+    }
+
+    public List<UserEntity> getAllUsers() {
+        return userEntityRepository.findAll();
+    }
+
+    @Transactional
+    public void setActiveStatus(Long id) {
+        userEntityRepository.setActiveStatus(id);
     }
 }
