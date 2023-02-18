@@ -58,9 +58,9 @@ public class WebSecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/v1/process_register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/questions/upload").hasAnyAuthority("CREATOR", "EDITOR", "ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/v1/questions/delete/all").hasAnyAuthority("CREATOR", "EDITOR", "ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/api/v1/random").hasAnyAuthority("CREATOR", "EDITOR", "ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/random").hasAnyAuthority("GUEST", "CREATOR", "EDITOR", "ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/v1/reset").hasAnyAuthority("CREATOR", "EDITOR", "ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/api/v1/edit/").hasAnyAuthority("CREATOR", "EDITOR", "ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/edit/").hasAnyAuthority("GUEST", "CREATOR", "EDITOR", "ADMIN")
                         .anyRequest().authenticated())
                 .formLogin((form) -> form
                         .usernameParameter("username")
