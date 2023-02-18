@@ -58,10 +58,9 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        if (userEntity.getEmail().contains("admin")) return true;
-        if (userEntity.isActive() == false) return false;
+        if (userEntity.getRoles().contains("ADMIN") == true) return true;
 
-        if (!userEntity.isActive() == true) return true;
+        if (userEntity.isActive() == false) return false;
 
         return true;
     }
