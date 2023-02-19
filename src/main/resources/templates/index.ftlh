@@ -41,7 +41,7 @@
     <fieldset>
         <legend><span class="number">4.</span>Help</legend>
         <div style="display: inline-block; margin-left:15px">
-            <input type="submit" id="help_page" value="Help"/>
+            <input type="submit" id="help_page" value="Help" onclick="return alert('Default user is: guest/guest ')"/>
         </div>
     </fieldset>
 </div>

@@ -52,7 +52,7 @@ public class DemoApplication {
             guestPermission.add(guestRole);
 
             userRepository.save(new UserEntity(1L, "admin@qa.team", passwordEncoder.encode("123456"), "Male", true, adminPermission));
-            userRepository.save(new UserEntity(2L, "guest@qa.team", passwordEncoder.encode("123456"), "Male", true, guestPermission));
+            userRepository.save(new UserEntity(2L, "guest", passwordEncoder.encode("guest"), "Male", true, guestPermission));
 
         };
     }

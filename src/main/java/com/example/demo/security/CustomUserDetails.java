@@ -58,8 +58,6 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        if (userEntity.getRoles().contains("ADMIN") == true) return true;
-
         if (userEntity.isActive() == false) return false;
 
         return true;
