@@ -14,7 +14,7 @@
         <fieldset>
             <legend><span class="number">1.</span>List of technical interview questions</legend>
             <div style="display: inline-block; margin-left:15px">
-                <input type="submit" id="list_of_questions" value="List of questions."/>
+                <input type="submit" id="list_of_questions" value="List of questions"/>
             </div>
         </fieldset>
     </form>
@@ -42,6 +42,14 @@
         <legend><span class="number">4.</span>Help</legend>
         <div style="display: inline-block; margin-left:15px">
             <input type="submit" id="help_page" value="Help" onclick="return alert('Default user is: guest/guest ')"/>
+        </div>
+    </fieldset>
+</div>
+<div class="form-style-5">
+    <fieldset>
+        <legend><span class="number">5.</span>Admin panel</legend>
+        <div style="display: inline-block; margin-left:15px">
+            <input type="submit" id="admin_button" value="Admin" onclick="location.href='/api/v1/admin/users'"/>
         </div>
     </fieldset>
 </div>

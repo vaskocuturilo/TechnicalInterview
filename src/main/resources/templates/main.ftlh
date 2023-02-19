@@ -18,13 +18,6 @@
         </form>
     </div>
 </div>
-<div class="right">
-    <div>
-        <div style="display: inline-block; margin-left:15px">
-            <input type="submit" id="admin_button" value="admin" onclick="location.href='/api/v1/admin/users'"/>
-        </div>
-    </div>
-</div>
 <div class="container text-center">
     <h1>Technical interview questions.</h1>
 </div>
