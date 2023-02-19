@@ -31,13 +31,9 @@ public class UserEntityService {
 
     @Transactional
     public void registerUser(final UserEntity userEntity) {
-        RoleEntity role = new RoleEntity();
-        if (userEntity.getEmail().contains("admin")) {
-            role.setName("ADMIN");
-        } else {
-            role.setName("GUEST");
-        }
         UserEntity user = userEntityRepository.findByEmail(userEntity.getEmail());
+        RoleEntity role = new RoleEntity();
+        role.setName("GUEST");
         if (user != null) {
             throw new UserFoundException(String.format(infoMessage, userEntity.getEmail()));
         }
