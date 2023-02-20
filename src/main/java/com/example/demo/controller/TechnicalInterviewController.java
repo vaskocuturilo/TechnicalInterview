@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.entity.TechnicalInterviewEntity;
 import com.example.demo.entity.UserEntity;
 import com.example.demo.exception.StorageFileNotFoundException;
+import com.example.demo.repository.TechnicalInterviewRepository;
 import com.example.demo.service.OneTimePasswordService;
 import com.example.demo.service.TechnicalInterviewService;
 import com.example.demo.service.UserEntityService;
@@ -30,17 +31,20 @@ public class TechnicalInterviewController {
     private final StorageService storageService;
     private final UploadService uploadService;
 
+    private final TechnicalInterviewRepository technicalInterviewRepository;
+
     private final OneTimePasswordService oneTimePasswordService;
 
     @Value("${storage.error.message}")
     private String storageNotFoundErrorMessage;
 
     @Autowired
-    public TechnicalInterviewController(TechnicalInterviewService technicalInterviewService, UserEntityService userEntityService, StorageService storageService, UploadService uploadService, OneTimePasswordService oneTimePasswordService) {
+    public TechnicalInterviewController(TechnicalInterviewService technicalInterviewService, UserEntityService userEntityService, StorageService storageService, UploadService uploadService, TechnicalInterviewRepository technicalInterviewRepository, OneTimePasswordService oneTimePasswordService) {
         this.technicalInterviewService = technicalInterviewService;
         this.userEntityService = userEntityService;
         this.storageService = storageService;
         this.uploadService = uploadService;
+        this.technicalInterviewRepository = technicalInterviewRepository;
         this.oneTimePasswordService = oneTimePasswordService;
     }
 

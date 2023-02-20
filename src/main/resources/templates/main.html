@@ -1,3 +1,4 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
@@ -14,6 +15,15 @@
         <form action="/logout" method="POST">
             <div style="display: inline-block; margin-left:15px">
                 <input type="submit" id="button_logout" value="Log out"/>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="right" sec:authorize="!hasRole('ADMIN')">
+    <div>
+        <form action="/api/v1/admin/users" method="GET">
+            <div style="display: inline-block; margin-left:15px">
+                <input type="submit" id="button_admin" value="admin"/>
             </div>
         </form>
     </div>
@@ -116,8 +126,6 @@
                                onclick="return confirm('Are you sure?')">Delete</a>
                         </td>
                     </tr>
-                    </
-                    #list>
                     </tbody>
                 </table>
             </div>
@@ -133,7 +141,6 @@
                 </div>
             </form>
         </div>
-
         <div style="display: inline-block; margin-right:0px">
             <form action="/api/v1/reset" method="GET">
                 <div style="display: inline-block; margin-left:15px">

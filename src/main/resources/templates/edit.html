@@ -23,7 +23,7 @@
 </div>
 <div class="form-style-5">
     <fieldset>
-        <form action="${'/api/v1/edit/'+id}" method="PUT">
+        <form th:action="@{/api/v1/edit/__${id}__}" method="PUT">
             <fieldset>
                 <legend><span class="number">INFO</span>Edit technical interview question:</legend>
                 <div style="display: inline-block;">

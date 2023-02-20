@@ -34,18 +34,16 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <#list randomQuestion as questions>
-                        <tr>
-                            <td>${questions.taskName}</td>
-                            <td>${questions.description}</td>
-                            <td>${questions.completed?string("Yes","No")}</td>
-                            <td>
-                                <a href="${'/api/v1/complete/'+questions.taskId}">Complete</a>
-                                <br>
-                                <a href="${'/api/v1/questions'}">Not complete</a>
-                            </td>
-                        </tr>
-                    </#list>
+                    <tr th:each="questions: ${randomQuestion}">
+                        <td th:text="${questions.taskName}"></td>
+                        <td th:text="${questions.description}"></td>
+                        <td th:text="${questions.isCompleted()}"></td>
+                        <td>
+                            <a th:href="@{/api/v1/complete/__${questions.getTaskId()}__}">Complete</a>
+                            <br>
+                            <a th:href="@{/api/v1/questions}">Not complete</a>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
