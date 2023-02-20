@@ -42,6 +42,7 @@ You will need the following technologies available to try it out:
 - Add API tests. :heavy_check_mark:
 - Add UI tests. :heavy_check_mark:
 - Update Front end :heavy_check_mark:
+- Migrate from FreeMaker to Thymeleaf :heavy_check_mark:
 
 ### Schema databases
 

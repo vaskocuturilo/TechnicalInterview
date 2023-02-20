@@ -140,8 +140,11 @@ public class TechnicalInterviewController {
     }
 
     @PostMapping("/process_register")
-    public String processRegister(@ModelAttribute UserEntity userEntity) {
+    public String processRegister(@ModelAttribute UserEntity userEntity, Model model) {
         userEntityService.registerUser(userEntity);
+        Integer oneTimePassword = oneTimePasswordService.returnOneTimePassword().getOneTimePasswordCode();
+
+        model.addAttribute("oneTimePassword", oneTimePassword);
 
         return "register_success";
     }
