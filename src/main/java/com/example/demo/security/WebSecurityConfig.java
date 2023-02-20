@@ -52,6 +52,7 @@ public class WebSecurityConfig {
                 .csrf().disable()
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/").permitAll()
+                        .requestMatchers("/css/**").permitAll()
                         .requestMatchers("/api/v1/admin/users").hasAnyAuthority("ADMIN")
                         .requestMatchers("/api/v1/create").hasAnyAuthority("GUEST", "USER", "ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/v1/register").permitAll()

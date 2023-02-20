@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
     <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
-    <#include "style.css">
+    <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet"/>
 </head>
 <body>
 <div class="right">
@@ -23,7 +23,7 @@
 </div>
 <div class="form-style-5">
     <fieldset>
-        <form action="${'/api/v1/edit/'+id}" method="PUT">
+        <form th:action="@{/api/v1/edit/__${id}__}" method="PUT">
             <fieldset>
                 <legend><span class="number">INFO</span>Edit technical interview question:</legend>
                 <div style="display: inline-block;">

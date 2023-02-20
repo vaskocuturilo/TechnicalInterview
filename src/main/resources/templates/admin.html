@@ -5,6 +5,7 @@
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
     <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet"/>
 </head>
 <body>
 <div class="container text-center">
@@ -25,20 +26,19 @@
                         <tr>
                             <td>Email</td>
                             <td>Gender</td>
+                            <td>Roles</td>
                             <td>Active</td>
                             <td>Do you want to active?</td>
                         </tr>
                         </thead>
                         <tbody>
-                        <#list userList as users>
-                            <tr>
-                                <td><#if users.email??>${users.email}</#if></td>
-                                <td><#if users.gender??>${users.gender}</#if></td>
-                                <td><#if users.isActive()??>${users.isActive()?string("Active","Not Active")}</#if></td>
-                                <td><a href="${'/api/v1/admin/active/'+ users.id}"
-                                       id="cell_active" onclick="return confirm('Are you sure?')">Active</a>
-                            </tr>
-                        </#list>
+                        <tr th:each="user: ${userList}">
+                            <td th:text="${user.getEmail()}"></td>
+                            <td th:text="${user.getGender()}"></td>
+                            <td th:text="${user.getRoles()}"></td>
+                            <td th:text="${user.isActive()}"></td>
+                            <td><a th:href="@{/api/v1/admin/active/__${user.getId()}__}">Active</a></td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>

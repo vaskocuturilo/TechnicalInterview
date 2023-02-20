@@ -31,10 +31,16 @@ public class UserController {
         return "admin";
     }
 
-    @RequestMapping("/active/{id}")
+    @GetMapping("/active/{id}")
     public String activateNewUser(@PathVariable Long id) {
         userEntityService.setActiveStatus(id);
 
         return "redirect:/api/v1/admin/users";
+    }
+
+    @GetMapping("/approve/{otp}")
+    public String approveUser() {
+
+        return "main";
     }
 }

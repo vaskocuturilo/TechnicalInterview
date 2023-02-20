@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <title>Technical interview questions</title>
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
-    <#include "style.css">
+    <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet"/>
     <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div class="form-style-5">
-    <form action="/api/v1/questions" method="GET">
+    <form th:action="@{/api/v1/questions}" th:object="${questions}" method="GET">
         <fieldset>
             <legend><span class="number">1.</span>List of technical interview questions</legend>
             <div style="display: inline-block; margin-left:15px">
@@ -42,14 +42,6 @@
         <legend><span class="number">4.</span>Help</legend>
         <div style="display: inline-block; margin-left:15px">
             <input type="submit" id="help_page" value="Help" onclick="return alert('Default user is: guest/guest ')"/>
-        </div>
-    </fieldset>
-</div>
-<div class="form-style-5">
-    <fieldset>
-        <legend><span class="number">5.</span>Admin panel</legend>
-        <div style="display: inline-block; margin-left:15px">
-            <input type="submit" id="admin_button" value="Admin" onclick="location.href='/api/v1/admin/users'"/>
         </div>
     </fieldset>
 </div>
