@@ -39,7 +39,7 @@
                         <td th:text="${questions.description}"></td>
                         <td th:text="${questions.isCompleted()}"></td>
                         <td>
-                            <form action="#" th:action="@{/api/v1/questions/__${questions.getTaskId()}__/complete}"
+                            <form action="#" th:action="@{/api/v1/questions/__${questions.getId()}__/complete}"
                                   method="post">
                                 <button class="btn btn-primary">Complete</button>
                             </form>

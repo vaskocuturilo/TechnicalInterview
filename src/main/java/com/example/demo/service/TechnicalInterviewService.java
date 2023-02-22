@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @Log4j2
@@ -51,12 +52,12 @@ public class TechnicalInterviewService {
     }
 
     @Transactional
-    public Optional<TechnicalInterviewEntity> editTechnicalInterviewTask(final Long id) {
+    public Optional<TechnicalInterviewEntity> editTechnicalInterviewTask(final UUID id) {
         Optional<TechnicalInterviewEntity> technicalInterviewEntity = technicalInterviewRepository.findById(id);
 
         technicalInterviewEntity
                 .stream()
-                .filter(question -> question.getTaskId().equals(id))
+                .filter(question -> question.getId().equals(id))
                 .findFirst()
                 .orElseThrow(() -> {
                     QuestionNotFoundException questionNotFoundException = new QuestionNotFoundException(notFoundErrorMessage);
@@ -73,12 +74,12 @@ public class TechnicalInterviewService {
     }
 
     @Transactional
-    public void deleteTechnicalInterviewTask(final Long id) {
+    public void deleteTechnicalInterviewTask(final UUID id) {
         Optional<TechnicalInterviewEntity> technicalInterviewEntity = technicalInterviewRepository.findById(id);
 
         technicalInterviewEntity
                 .stream()
-                .filter(question -> question.getTaskId().equals(id))
+                .filter(question -> question.getId().equals(id))
                 .findFirst()
                 .orElseThrow(() -> {
                     QuestionNotFoundException questionNotFoundException = new QuestionNotFoundException(notFoundErrorMessage);
@@ -103,12 +104,12 @@ public class TechnicalInterviewService {
     }
 
     @Transactional
-    public void completeTechnicalInterviewTask(final boolean completed, final Long id) {
+    public void completeTechnicalInterviewTask(final boolean completed, final UUID id) {
         Optional<TechnicalInterviewEntity> technicalInterviewEntity = technicalInterviewRepository.findById(id);
 
         technicalInterviewEntity
                 .stream()
-                .filter(question -> question.getTaskId().equals(id))
+                .filter(question -> question.getId().equals(id))
                 .findFirst()
                 .orElseThrow(
                         () -> {

@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Controller
 @Log4j2
@@ -81,7 +82,7 @@ public class TechnicalInterviewController {
     }
 
     @PostMapping(value = "/questions/{id}/edit")
-    public String editTechnicalInterviewTask(@PathVariable Long id, Model model) {
+    public String editTechnicalInterviewTask(@PathVariable UUID id, Model model) {
         Optional<TechnicalInterviewEntity> technicalInterview = technicalInterviewService.editTechnicalInterviewTask(id);
         model.addAttribute("technicalInterview", technicalInterview);
 
@@ -89,7 +90,7 @@ public class TechnicalInterviewController {
     }
 
     @PostMapping(value = "/questions/{id}/delete")
-    public String deleteTechnicalInterviewTask(@PathVariable Long id) {
+    public String deleteTechnicalInterviewTask(@PathVariable UUID id) {
         technicalInterviewService.deleteTechnicalInterviewTask(id);
 
         return "redirect:/api/v1/questions";
@@ -103,7 +104,7 @@ public class TechnicalInterviewController {
     }
 
     @PostMapping(value = "/questions/{id}/complete")
-    public String completeTechnicalInterviewTask(@PathVariable Long id) {
+    public String completeTechnicalInterviewTask(@PathVariable UUID id) {
         technicalInterviewService.completeTechnicalInterviewTask(true, id);
 
         return "redirect:/api/v1/questions";
