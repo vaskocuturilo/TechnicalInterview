@@ -69,8 +69,11 @@
 </div>
 <div class="form-style-5">
     <div class="container text-center">
-        <legend><span class="number" id="info_icon">INF</span></legend>
-        <strong><p id="info_message" th:text="${message}"></p></strong>
+        <strong>
+            <div id="info_message" th:text="${message}">
+                <legend><span class="number" id="info_icon">INF</span></legend>
+            </div>
+        </strong>
     </div>
 </div>
 <div class="form-style-5">
@@ -120,18 +123,18 @@
                         <td th:text="${questions.description}"></td>
                         <td th:text="${questions.isCompleted()}"></td>
                         <td>
-                            <form action="#" th:action="@{/api/v1/questions/__${questions.getTaskId()}__/edit}"
+                            <form action="#" th:action="@{/api/v1/questions/__${questions.getId()}__/edit}"
                                   method="post">
                                 <button class="btn btn-primary">Edit</button>
                             </form>
                         </td>
                         <td>
-                            <form action="#" th:action="@{/api/v1/questions/__${questions.getTaskId()}__/complete}"
+                            <form action="#" th:action="@{/api/v1/questions/__${questions.getId()}__/complete}"
                                   method="post">
                                 <button class="btn btn-primary">Complete</button>
                             </form>
                         <td>
-                            <form action="#" th:action="@{/api/v1/questions/__${questions.getTaskId()}__/delete}"
+                            <form action="#" th:action="@{/api/v1/questions/__${questions.getId()}__/delete}"
                                   method="post">
                                 <button class="btn btn-primary" onclick="return confirm('Are you sure?')">Delete
                                 </button>

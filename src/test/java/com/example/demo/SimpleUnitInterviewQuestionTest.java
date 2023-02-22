@@ -41,9 +41,9 @@ public class SimpleUnitInterviewQuestionTest {
         technicalInterview.setCompleted(true);
         TechnicalInterviewEntity technicalInterviewEntitySaved = technicalInterviewRepository.save(technicalInterview);
 
-        TechnicalInterviewEntity technicalInterviewEntityExist = entityManager.find(TechnicalInterviewEntity.class, technicalInterviewEntitySaved.getTaskId());
+        TechnicalInterviewEntity technicalInterviewEntityExist = entityManager.find(TechnicalInterviewEntity.class, technicalInterviewEntitySaved.getId());
 
-        assertThat(technicalInterview.getTaskId()).isEqualTo(technicalInterviewEntityExist.getTaskId());
+        assertThat(technicalInterview.getId()).isEqualTo(technicalInterviewEntityExist.getId());
         assertThat(technicalInterview.getTaskName()).isEqualTo(technicalInterviewEntityExist.getTaskName());
         assertThat(technicalInterview.getDescription()).isEqualTo(technicalInterviewEntityExist.getDescription());
 
