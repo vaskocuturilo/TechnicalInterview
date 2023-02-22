@@ -51,14 +51,20 @@ public class TechnicalInterviewService {
     }
 
     @Transactional
-    public void editTechnicalInterviewTask(TechnicalInterviewEntity technicalInterviewEntity, final Long id) {
-        technicalInterviewRepository.findById(id)
-                .ifPresent(question -> {
-                    question.setTaskName(technicalInterviewEntity.getTaskName());
-                    question.setDescription(technicalInterviewEntity.getDescription());
-                    technicalInterviewRepository.save(question);
-                    log.info("The questions were save");
+    public Optional<TechnicalInterviewEntity> editTechnicalInterviewTask(final Long id) {
+        Optional<TechnicalInterviewEntity> technicalInterviewEntity = technicalInterviewRepository.findById(id);
+
+        technicalInterviewEntity
+                .stream()
+                .filter(question -> question.getTaskId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> {
+                    QuestionNotFoundException questionNotFoundException = new QuestionNotFoundException(notFoundErrorMessage);
+                    log.debug("The question with id = " + id + " not found." + questionNotFoundException.getMessage());
+                    return questionNotFoundException;
                 });
+
+        return technicalInterviewEntity;
     }
 
     @Transactional

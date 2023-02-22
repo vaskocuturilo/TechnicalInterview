@@ -9,32 +9,32 @@
     <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet"/>
 </head>
 <body>
-<div class="right">
-    <div>
-        <form action="/api/v1/questions" method="GET">
-            <div style="display: inline-block; margin-left:15px">
-                <input type="submit" id="button_logout" value="To Main Page"/>
-            </div>
-        </form>
-    </div>
-</div>
 <div class="container text-center">
     <h1>Edit technical interview question:</h1>
 </div>
 <div class="form-style-5">
     <fieldset>
-        <form th:action="@{/api/v1/edit/__${id}__}" method="PUT">
+        <form action="#" th:action="@{/api/v1/questions}" th:object="${technicalInterview}" method="POST">
             <fieldset>
                 <legend><span class="number">INFO</span>Edit technical interview question:</legend>
                 <div style="display: inline-block;">
-                    <strong><label class="formSpacing" for="job" id="label_title">Title of question:</label></strong>
-                    <input class="inputWidth1" type="text" id="task_name_input" name="taskName" required
+                    <strong><label class="formSpacing" id="id_title">Title of question:</label></strong>
+                    <input class="inputWidth1" type="text" th:field="*{taskId}" id="id_name_input" name="taskId"
+                           required
+                           minlength="1"
+                           maxlength="255" placeholder="Title of question *" hidden="hidden">
+                </div>
+                <div style="display: inline-block;">
+                    <strong><label class="formSpacing" id="label_title">Title of question:</label></strong>
+                    <input class="inputWidth1" type="text" th:field="*{taskName}" id="task_name_input" name="taskName"
+                           required
                            minlength="1"
                            maxlength="255" placeholder="Title of question *">
                 </div>
                 <div style="display: inline-block; margin-left:20px">
-                    <strong><label class="formSpacing" for="job" id="label_description">Description of question:</label></strong>
-                    <input class="inputWidth1" type="text" id="description_input" name="description" required
+                    <strong><label class="formSpacing" id="label_description">Description of question:</label></strong>
+                    <input class="inputWidth1" type="text" th:field="*{description}" id="description_input"
+                           name="description" required
                            minlength="1"
                            maxlength="255" placeholder="Description of question *">
                 </div>

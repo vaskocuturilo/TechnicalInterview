@@ -39,9 +39,14 @@
                         <td th:text="${questions.description}"></td>
                         <td th:text="${questions.isCompleted()}"></td>
                         <td>
-                            <a th:href="@{/api/v1/complete/__${questions.getTaskId()}__}">Complete</a>
+                            <form action="#" th:action="@{/api/v1/questions/__${questions.getTaskId()}__/complete}"
+                                  method="post">
+                                <button class="btn btn-primary">Complete</button>
+                            </form>
                             <br>
-                            <a th:href="@{/api/v1/questions}">Not complete</a>
+                            <form action="#" th:action="@{/api/v1/questions}" method="GET">
+                                <button class="btn btn-primary">Not Complete</button>
+                            </form>
                         </td>
                     </tr>
                     </tbody>
