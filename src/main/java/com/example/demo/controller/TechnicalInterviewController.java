@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @Log4j2
@@ -69,7 +70,7 @@ public class TechnicalInterviewController {
         return "main";
     }
 
-    @GetMapping("/random")
+    @GetMapping("/questions/random")
     public String getRandomTechnicalInterviewTask(final Model model) {
         List<TechnicalInterviewEntity> randomQuestion = technicalInterviewService.getRandomQuestion();
 
@@ -79,16 +80,15 @@ public class TechnicalInterviewController {
         return "question";
     }
 
-    @RequestMapping(value = "/edit/{id}")
-    public String editTechnicalInterviewTask(@PathVariable Long id,
-                                             @ModelAttribute TechnicalInterviewEntity technicalInterviewEntity) {
-
-        technicalInterviewService.editTechnicalInterviewTask(technicalInterviewEntity, id);
+    @PostMapping(value = "/questions/{id}/edit")
+    public String editTechnicalInterviewTask(@PathVariable Long id, Model model) {
+        Optional<TechnicalInterviewEntity> technicalInterview = technicalInterviewService.editTechnicalInterviewTask(id);
+        model.addAttribute("technicalInterview", technicalInterview);
 
         return "edit";
     }
 
-    @RequestMapping(value = "/delete/{id}")
+    @PostMapping(value = "/questions/{id}/delete")
     public String deleteTechnicalInterviewTask(@PathVariable Long id) {
         technicalInterviewService.deleteTechnicalInterviewTask(id);
 
@@ -102,7 +102,7 @@ public class TechnicalInterviewController {
         return "redirect:/api/v1/questions";
     }
 
-    @RequestMapping(value = "/complete/{id}")
+    @PostMapping(value = "/questions/{id}/complete")
     public String completeTechnicalInterviewTask(@PathVariable Long id) {
         technicalInterviewService.completeTechnicalInterviewTask(true, id);
 
@@ -130,7 +130,7 @@ public class TechnicalInterviewController {
         return "redirect:/api/v1/questions";
     }
 
-    @GetMapping("/reset")
+    @GetMapping("/questions/reset")
     public String resetAllCompletedTechnicalInterviewTasks() {
         technicalInterviewService.resetAllCompletedTechnicalInterviewTasks();
         return "redirect:/api/v1/questions";
