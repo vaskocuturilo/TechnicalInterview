@@ -128,3 +128,7 @@
     margin-right: 10px;
     margin-top: 20px;
 }
+
+td {
+    text-align: center;
+}
