@@ -8,25 +8,26 @@
     <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet"/>
     <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/index.js}"></script>
 </head>
 <body>
 <div class="right">
-    <div>
-        <form action="/logout" method="POST">
-            <div style="display: inline-block; margin-left:15px">
-                <input type="submit" id="button_logout" value="Log out"/>
+    <nav>
+        <div class="navbar">
+            <div class="container nav-container">
+                <input class="checkbox" type="checkbox" name="" id=""/>
+                <div class="hamburger-lines">
+                    <span class="line line1"></span>
+                    <span class="line line2"></span>
+                    <span class="line line3"></span>
+                </div>
+                <div class="menu-items">
+                    <li><a href="/logout">Logout</a></li>
+                    <li><a href="/api/v1/admin/users" sec:authentication="hasAnyAuthority('ADMIN')">Admin</a></li>
+                </div>
             </div>
-        </form>
-    </div>
-</div>
-<div class="right" sec:authorize="!hasRole('ADMIN')">
-    <div>
-        <form action="/api/v1/admin/users" method="GET">
-            <div style="display: inline-block; margin-left:15px">
-                <input type="submit" id="button_admin" value="admin"/>
-            </div>
-        </form>
-    </div>
+        </div>
+    </nav>
 </div>
 <div class="container text-center">
     <h1>Technical interview questions.</h1>
