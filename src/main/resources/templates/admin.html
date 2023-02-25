@@ -8,43 +8,52 @@
     <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet"/>
 </head>
 <body>
+<div class="right">
+    <nav role='navigation'>
+        <div id="menuToggle">
+            <input type="checkbox"/>
+            <span></span>
+            <span></span>
+            <span></span>
+            <ul id="menu">
+                <a href="/api/v1/questions">
+                    <li>To main page</li>
+                </a>
+            </ul>
+        </div>
+    </nav>
+</div>
 <div class="container text-center">
-    <div>
-        <form action="/logout" method="post">
-            <input type="submit" value="Sign Out"/>
-        </form>
-    </div>
-    <div>
-        <h1>List of Users</h1>
-    </div>
-    <div class="form-style-5">
-        <fieldset>
-            <div class="container text-center">
-                <div>
-                    <table class="table table-striped table-bordered" id="main_table">
-                        <thead class="table-dark">
-                        <tr>
-                            <td>Email</td>
-                            <td>Gender</td>
-                            <td>Roles</td>
-                            <td>Active</td>
-                            <td>Do you want to active?</td>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="user: ${userList}">
-                            <td th:text="${user.getEmail()}"></td>
-                            <td th:text="${user.getGender()}"></td>
-                            <td th:text="${user.getRoles()}"></td>
-                            <td th:text="${user.isActive()}"></td>
-                            <td><a th:href="@{/api/v1/admin/active/__${user.getId()}__}">Active</a></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+    <h1>List of Users</h1>
+</div>
+<div class="form-style-5">
+    <fieldset>
+        <div class="container text-center">
+            <div>
+                <table class="table table-striped table-bordered" id="main_table">
+                    <thead class="table-dark">
+                    <tr>
+                        <td>Email</td>
+                        <td>Gender</td>
+                        <td>Roles</td>
+                        <td>Active</td>
+                        <td>Do you want to active?</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="user: ${userList}">
+                        <td th:text="${user.getEmail()}"></td>
+                        <td th:text="${user.getGender()}"></td>
+                        <td th:text="${user.getRoles()}"></td>
+                        <td th:text="${user.isActive()}"></td>
+                        <td><a th:href="@{/api/v1/admin/active/__${user.getId()}__}">Active</a></td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
-        </fieldset>
-    </div>
+        </div>
+    </fieldset>
+</div>
 </div>
 </body>
 </html>
