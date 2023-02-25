@@ -12,6 +12,21 @@
 <div class="container text-center">
     <h1>Edit technical interview question:</h1>
 </div>
+<div>
+    <nav role='navigation'>
+        <div id="menuToggle">
+            <input type="checkbox"/>
+            <span></span>
+            <span></span>
+            <span></span>
+            <ul id="menu">
+                <a href="/api/v1/questions">
+                    <li>To main page</li>
+                </a>
+            </ul>
+        </div>
+    </nav>
+</div>
 <div class="form-style-5">
     <fieldset>
         <form action="#" th:action="@{/api/v1/questions}" th:object="${technicalInterview}" method="POST">
