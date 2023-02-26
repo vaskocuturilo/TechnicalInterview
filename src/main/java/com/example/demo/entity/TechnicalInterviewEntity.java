@@ -1,7 +1,7 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
@@ -10,6 +10,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "technical_interview_entity")
 @Data
+@NoArgsConstructor
 public class TechnicalInterviewEntity {
     @Id
     @GeneratedValue(generator = "UUID")
@@ -25,7 +26,13 @@ public class TechnicalInterviewEntity {
     )
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
-    private String taskName;
+    private String title;
     private String description;
     private boolean completed;
+
+    public TechnicalInterviewEntity(String title, String description, boolean completed) {
+        this.title = title;
+        this.description = description;
+        this.completed = completed;
+    }
 }
