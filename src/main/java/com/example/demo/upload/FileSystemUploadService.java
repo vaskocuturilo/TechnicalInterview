@@ -18,7 +18,6 @@ import java.util.List;
 @Service
 @Log4j2
 public class FileSystemUploadService implements UploadService {
-
     @Value("${app.upload.path}")
     private String location;
     final TechnicalInterviewService technicalInterviewService;
@@ -26,13 +25,12 @@ public class FileSystemUploadService implements UploadService {
     public FileSystemUploadService(TechnicalInterviewService technicalInterviewService) {
         this.technicalInterviewService = technicalInterviewService;
     }
-
     @Override
     public void upload(MultipartFile file) {
         ObjectMapper mapper = new ObjectMapper();
-        TypeReference<List<TechnicalInterviewEntity>> typeReference = new TypeReference<List<TechnicalInterviewEntity>>() {
+        TypeReference<List<TechnicalInterviewEntity>> typeReference = new TypeReference<>() {
         };
-        InputStream inputStream = null;
+        InputStream inputStream;
         try {
             inputStream = new FileInputStream(location + file.getOriginalFilename());
         } catch (FileNotFoundException e) {
@@ -41,13 +39,23 @@ public class FileSystemUploadService implements UploadService {
             }
             throw new RuntimeException(e);
         }
-        try {
-            List<TechnicalInterviewEntity> technicalInterviewEntities = mapper.readValue(inputStream, typeReference);
-            technicalInterviewService.saveTechnicalInterviewTasks(technicalInterviewEntities);
-            log.info(file.getOriginalFilename() + " was save to upload-dir ");
-        } catch (IOException e) {
-            if (log.isDebugEnabled()) {
-                log.debug("Log Message -> : Class FileSystemUploadService, method upload is down.", e.getMessage());
+        if ("text/csv".equals(file.getContentType())) {
+            try {
+                List<TechnicalInterviewEntity> technicalInterviewEntities = UploadHelper.uploadFromCsvFile(inputStream);
+                technicalInterviewService.saveTechnicalInterviewTasks(technicalInterviewEntities);
+                log.info(file.getOriginalFilename() + " was save to upload-dir ");
+            } catch (IOException e) {
+                log.debug("Log Message -> : Class FileSystemUploadService, method upload (CSV) is down.", e.getMessage());
+            }
+        } else if ("application/json".equals(file.getContentType())) {
+            try {
+                List<TechnicalInterviewEntity> technicalInterviewEntities = mapper.readValue(inputStream, typeReference);
+                technicalInterviewService.saveTechnicalInterviewTasks(technicalInterviewEntities);
+                log.info(file.getOriginalFilename() + " was save to upload-dir ");
+            } catch (IOException e) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Log Message -> : Class FileSystemUploadService, method upload (JSON) is down.", e.getMessage());
+                }
             }
         }
     }

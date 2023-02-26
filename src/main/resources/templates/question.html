@@ -41,7 +41,7 @@
                     </thead>
                     <tbody>
                     <tr th:each="questions: ${randomQuestion}">
-                        <td th:text="${questions.taskName}"></td>
+                        <td th:text="${questions.getTitle}"></td>
                         <td th:text="${questions.description}"></td>
                         <td th:text="${questions.isCompleted()}"></td>
                         <td>

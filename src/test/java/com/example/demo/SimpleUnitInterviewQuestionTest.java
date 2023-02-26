@@ -36,7 +36,7 @@ public class SimpleUnitInterviewQuestionTest {
     public void testCreateTechInterviewQuestionTask() {
         TechnicalInterviewEntity technicalInterview = new TechnicalInterviewEntity();
         String text = createUniqTaskDescriptionName();
-        technicalInterview.setTaskName(text);
+        technicalInterview.setTitle(text);
         technicalInterview.setDescription(text);
         technicalInterview.setCompleted(true);
         TechnicalInterviewEntity technicalInterviewEntitySaved = technicalInterviewRepository.save(technicalInterview);
@@ -44,7 +44,7 @@ public class SimpleUnitInterviewQuestionTest {
         TechnicalInterviewEntity technicalInterviewEntityExist = entityManager.find(TechnicalInterviewEntity.class, technicalInterviewEntitySaved.getId());
 
         assertThat(technicalInterview.getId()).isEqualTo(technicalInterviewEntityExist.getId());
-        assertThat(technicalInterview.getTaskName()).isEqualTo(technicalInterviewEntityExist.getTaskName());
+        assertThat(technicalInterview.getTitle()).isEqualTo(technicalInterviewEntityExist.getTitle());
         assertThat(technicalInterview.getDescription()).isEqualTo(technicalInterviewEntityExist.getDescription());
 
     }
@@ -62,14 +62,14 @@ public class SimpleUnitInterviewQuestionTest {
         TechnicalInterviewEntity technicalInterview = new TechnicalInterviewEntity();
         String text = createUniqTaskDescriptionName();
 
-        technicalInterview.setTaskName(text);
+        technicalInterview.setTitle(text);
         technicalInterview.setDescription(text);
         technicalInterview.setCompleted(true);
         technicalInterviewRepository.save(technicalInterview);
 
 
         TechnicalInterviewEntity technicalInterviewEntity = technicalInterviewRepository.findByTaskName(text);
-        assertThat(technicalInterviewEntity.getTaskName()).isEqualTo(text);
+        assertThat(technicalInterviewEntity.getTitle()).isEqualTo(text);
     }
 
     @Test
@@ -78,7 +78,7 @@ public class SimpleUnitInterviewQuestionTest {
         TechnicalInterviewEntity technicalInterview = new TechnicalInterviewEntity();
         String text = createUniqTaskDescriptionName();
 
-        technicalInterview.setTaskName(text);
+        technicalInterview.setTitle(text);
         technicalInterview.setDescription(text);
         technicalInterview.setCompleted(true);
         technicalInterviewRepository.save(technicalInterview);
