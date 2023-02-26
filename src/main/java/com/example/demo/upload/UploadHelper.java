@@ -1,41 +1,40 @@
 package com.example.demo.upload;
 
 import com.example.demo.entity.TechnicalInterviewEntity;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j2;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.List;
 
 @Log4j2
 public class UploadHelper {
-    public static List<TechnicalInterviewEntity> uploadFromCsvFile(InputStream inputStream) throws IOException {
-        try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
-             CSVParser csvParser = new CSVParser(fileReader, CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim())) {
-            List<TechnicalInterviewEntity> technicalInterviewEntities = new ArrayList<>();
+    private final ObjectMapper mapper = new ObjectMapper();
 
-            Iterable<CSVRecord> csvRecords = csvParser.getRecords();
-            for (CSVRecord csvRecord : csvRecords) {
-                TechnicalInterviewEntity technicalInterview = new TechnicalInterviewEntity(
-                        csvRecord.get("title"),
-                        csvRecord.get("description"),
-                        Boolean.parseBoolean(csvRecord.get("completed")));
-
-                technicalInterviewEntities.add(technicalInterview);
+    public List<TechnicalInterviewEntity> uploadEntities(final MultipartFile file, final InputStream inputStream) throws IOException {
+        List<TechnicalInterviewEntity> technicalInterviewEntities;
+        TypeReference<List<TechnicalInterviewEntity>> typeReference = new TypeReference<List<TechnicalInterviewEntity>>() {
+        };
+        switch (file.getContentType()) {
+            case "text/csv" -> {
+                technicalInterviewEntities = new ParseHelper().parseCsvFile(inputStream);
+                log.debug("Log Message -> The text/csv file was parsing : {}", technicalInterviewEntities.toArray());
             }
-            log.info(technicalInterviewEntities);
-            return technicalInterviewEntities;
+            case "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" -> {
+                technicalInterviewEntities = new ParseHelper().parseExcelFile(inputStream);
+                log.debug("Log Message -> The excel file was parsing : {}", technicalInterviewEntities.toArray());
+            }
+            case "application/json" -> {
+                technicalInterviewEntities = mapper.readValue(inputStream, typeReference);
+                log.debug("Log Message -> The json file was parsing", technicalInterviewEntities.toArray());
+            }
+            default ->
+                    throw new IllegalStateException("unknown format of content type for file " + file.getContentType());
         }
-    }
-
-    public static List<TechnicalInterviewEntity> uploadFromExcelFile(InputStream inputStream) {
-        return null;
+        log.debug("Log Message -> : {} The  technicalInterviewEntities log", technicalInterviewEntities.toArray());
+        return technicalInterviewEntities;
     }
 }

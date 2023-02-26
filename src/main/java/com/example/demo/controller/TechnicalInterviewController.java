@@ -26,15 +26,10 @@ import java.util.UUID;
 @Log4j2
 @RequestMapping("/api/v1")
 public class TechnicalInterviewController {
-    private static final String NEW_ONE_TIME_PASSWORD_CODE = "A new one time password oneTimePasswordCode:{}";
-    private static final String EXPIRE_DATA = "A new expires:{}";
     private final TechnicalInterviewService technicalInterviewService;
     private final UserEntityService userEntityService;
     private final StorageService storageService;
     private final UploadService uploadService;
-
-    private final TechnicalInterviewRepository technicalInterviewRepository;
-
     private final OneTimePasswordService oneTimePasswordService;
 
     @Value("${storage.error.message}")
@@ -46,7 +41,6 @@ public class TechnicalInterviewController {
         this.userEntityService = userEntityService;
         this.storageService = storageService;
         this.uploadService = uploadService;
-        this.technicalInterviewRepository = technicalInterviewRepository;
         this.oneTimePasswordService = oneTimePasswordService;
     }
 
