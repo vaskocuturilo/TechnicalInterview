@@ -11,7 +11,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Description;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Date;
 import java.util.List;
@@ -21,6 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Rollback(value = false)
+@ActiveProfiles("dev")
 public class SimpleUnitInterviewQuestionTest {
     @Autowired
     private TestEntityManager entityManager;
@@ -31,9 +34,12 @@ public class SimpleUnitInterviewQuestionTest {
     @MockBean
     private StorageService storageService;
 
+    @MockBean
+    private PasswordEncoder passwordEncoder;
+
     @Test
     @Description("This is a simple unit test.")
-    public void testCreateTechInterviewQuestionTask() {
+    public void testCreateTechInterviewQuestion() {
         TechnicalInterviewEntity technicalInterview = new TechnicalInterviewEntity();
         String text = createUniqTaskDescriptionName();
         technicalInterview.setTitle(text);

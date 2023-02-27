@@ -1,7 +1,7 @@
 package com.example.demo;
 
-import com.example.demo.model.health.HealthCheck;
-import com.example.demo.model.info.InformationRestService;
+import com.example.demo.model.health.Health;
+import com.example.demo.model.info.Info;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -26,20 +26,29 @@ public class SimpleAPITest {
 
     @Test
     public void testMakeSureThatHealthCheckEndpointUp() {
-        Response response = request.get("actuator/health").then().statusCode(200).extract().response();
+        Response response = request
+                .auth()
+                .form("admin@qa.team", "123456")
+                .get("actuator/health").then().statusCode(200).extract().response();
 
-        HealthCheck healthCheck = response.getBody().as(HealthCheck.class);
-
+        Health healthCheck = response.getBody().as(Health.class);
         assertThat(healthCheck.getStatus()).isEqualTo("UP");
     }
 
     @Test
     public void testMakeSureThatInfoCheckEndpointUp() {
-        Response response = request.get("actuator/info").then().statusCode(200).extract().response();
+        Response response = request
+                .auth()
+                .form("admin@qa.team", "123456")
+                .get("actuator/info").then().statusCode(200).extract().response();
 
-        InformationRestService informationRestService = response.getBody().as(InformationRestService.class);
+        Info informationRestService = response.getBody().as(Info.class);
 
         assertThat(informationRestService.getApp().getWebsite()).isEqualTo("http://localhost:8080/api/v1/");
+        assertThat(informationRestService.getApp().getName()).isEqualTo("Spring boot application");
+        assertThat(informationRestService.getApp().getDescription()).isEqualTo("Spring boot application");
+        assertThat(informationRestService.getApp().getVersion()).isEqualTo("1.0.0");
+
         assertThat(informationRestService.getJava().getVersion()).isEqualTo("17.0.5");
         assertThat(informationRestService.getJava().getVendor().getName()).isEqualTo("Private Build");
     }
@@ -47,10 +56,10 @@ public class SimpleAPITest {
     @Test
     public void testUploadCorrectFileSize() {
         File file = new File("src/main/resources/upload.json");
-        Response response = request
+        Response response = request.auth()
+                .form("admin@qa.team", "123456")
                 .multiPart("file", file, "application/json")
                 .when().request().post(ENDPOINT);
-
         assertThat(response.getStatusCode()).isEqualTo(302);
     }
 }
