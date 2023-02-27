@@ -38,7 +38,7 @@
             <legend><span class="number">1.</span>Add technical interview questions:</legend>
             <div style="display: inline-block;">
                 <strong><label class="formSpacing" id="label_title">Title of question:</label></strong>
-                <input class="inputWidth1" type="text" id="task_name_input" name="title" required
+                <input class="inputWidth1" type="text" id="title_name_input" name="title" required
                        minlength="1"
                        maxlength="255" placeholder="Title of question *">
             </div>
@@ -133,12 +133,12 @@
                         <td>
                             <form action="#" th:action="@{/api/v1/questions/__${questions.getId()}__/complete}"
                                   method="post">
-                                <button class="btn btn-primary">Complete</button>
+                                <button class="btn btn-primary" id="cell_complete">Complete</button>
                             </form>
                         <td>
                             <form action="#" th:action="@{/api/v1/questions/__${questions.getId()}__/delete}"
                                   method="post">
-                                <button class="btn btn-primary" onclick="return confirm('Are you sure?')">Delete
+                                <button class="btn btn-primary" id="cell_delete" onclick="return confirm('Are you sure?')">Delete
                                 </button>
                             </form>
                         </td>
