@@ -36,7 +36,7 @@ You will need the following technologies available to try it out:
 - Add login/register pages.
 - Add users and connection one-to-many.
 - Add iOS app for this service.
-- Add functionality for the upload questions from TXT/YAML/XLSX file.
+- Add functionality for the upload questions from TXT/YAML/XLSX file. :heavy_check_mark:
 - Add functionality for delete all questions from table.
 - Add unit tests. :heavy_check_mark:
 - Add API tests. :heavy_check_mark:
