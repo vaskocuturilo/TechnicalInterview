@@ -9,13 +9,17 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
 import java.time.Duration;
+import java.util.Date;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 public class SimpleUITest {
     private static WebDriver webDriver;
@@ -40,6 +44,12 @@ public class SimpleUITest {
     private static By COMPLETE_CELL = By.xpath("//table[@class='table table-striped table-bordered']//td[contains(text(),'Test complete')]/following-sibling::td//button[@id='cell_complete']");
     private static By TABLE_LIST = By.xpath("//table[@id='main_table']//tbody/tr");
     private static By MESSAGE = By.xpath("//div[@id='info_message']");
+
+    private static By SIGN_UP = By.xpath("//input[@id='register_page']");
+    private static By SIGN_UP_BUTTON = By.xpath("//input[@value='Sign Up']");
+    private static By EMAIL = By.xpath("//input[@id='email']");
+    private static By GENDER = By.xpath("//select[@id='gender']");
+
     private static final String UPLOAD_MESSAGE = "You successfully uploaded file is: %s";
     private static final String ERROR_UPLOAD_MESSAGE = "Maximum upload size of %s exceeded";
 
@@ -51,21 +61,17 @@ public class SimpleUITest {
     @BeforeEach
     public void setUpDriver() {
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless");
-        options.addArguments("--disable-gpu");
-        options.addArguments("--window-size=1920,1200");
-        options.addArguments("--ignore-certificate-errors");
-        options.addArguments("--disable-extensions");
-        options.addArguments("--no-sandbox");
-        options.addArguments("--disable-dev-shm-usage");
+//        options.addArguments("--headless");
+//        options.addArguments("--disable-gpu");
+//        options.addArguments("--window-size=1920,1200");
+//        options.addArguments("--ignore-certificate-errors");
+//        options.addArguments("--disable-extensions");
+//        options.addArguments("--no-sandbox");
+//        options.addArguments("--disable-dev-shm-usage");
 
         webDriver = new ChromeDriver(options);
         webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(DELAY));
         webDriver.get("http://localhost:8080/");
-        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(MAIN_PAGE_LINK_QUESTIONS)).click();
-        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(USER_NAME)).sendKeys("admin@qa.team");
-        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(PASSWORD)).sendKeys("123456");
-        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(SIGN_IN)).click();
     }
 
     @Test
@@ -75,6 +81,7 @@ public class SimpleUITest {
 
     @Test
     public void testVerifyAddElementsOnPage() {
+        loginUser("admin@qa.team", "123456");
         webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(DELAY));
 
         Integer totalCount = Integer.parseInt(webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(TOTAL_COUNT)).getText());
@@ -93,6 +100,7 @@ public class SimpleUITest {
     @Test
     public void testVerifyCompleteQuestion() {
         final String title = "Test complete";
+        loginUser("admin@qa.team", "123456");
         webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(DELAY));
         Integer count = Integer.parseInt(webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(PASS_COUNT)).getText());
 
@@ -109,6 +117,7 @@ public class SimpleUITest {
     @Test
     public void testVerifyTable() {
         webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(DELAY));
+        loginUser("admin@qa.team", "123456");
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(TITLE)).sendKeys("Test1");
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(DESCRIPTION)).sendKeys("Test1");
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(ADD_QUESTION_BUTTON)).click();
@@ -120,6 +129,8 @@ public class SimpleUITest {
     public void testDeleteElementFromTable() {
         final String title = "Question for delete";
         webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(DELAY));
+
+        loginUser("admin@qa.team", "123456");
         assertThat(webDriver.getTitle()).isEqualTo("Technical interview questions");
 
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(TITLE)).sendKeys(title);
@@ -142,6 +153,7 @@ public class SimpleUITest {
     @Test
     public void testDeleteAllElementsFromTable() {
         webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(DELAY));
+        loginUser("admin@qa.team", "123456");
         assertThat(webDriver.getTitle()).isEqualTo("Technical interview questions");
 
         assertThat(webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(TABLE)).isDisplayed());
@@ -161,6 +173,8 @@ public class SimpleUITest {
     public void testUploadCorrectJsonSizeFile() {
         File file = new File("src/main/resources/upload.json");
         webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(DELAY));
+
+        loginUser("admin@qa.team", "123456");
         assertThat(webDriver.getTitle()).isEqualTo("Technical interview questions");
 
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(UPLOAD_FILE)).sendKeys(file.getAbsolutePath());
@@ -174,6 +188,8 @@ public class SimpleUITest {
     public void testUploadCorrectCsvSizeFile() {
         File file = new File("src/main/resources/upload.csv");
         webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(DELAY));
+
+        loginUser("admin@qa.team", "123456");
         assertThat(webDriver.getTitle()).isEqualTo("Technical interview questions");
 
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(UPLOAD_FILE)).sendKeys(file.getAbsolutePath());
@@ -187,6 +203,9 @@ public class SimpleUITest {
     public void testUploadCorrectXlsxSizeFile() {
         File file = new File("src/main/resources/upload.xlsx");
         webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(DELAY));
+
+        loginUser("admin@qa.team", "123456");
+
         assertThat(webDriver.getTitle()).isEqualTo("Technical interview questions");
 
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(UPLOAD_FILE)).sendKeys(file.getAbsolutePath());
@@ -200,6 +219,9 @@ public class SimpleUITest {
     public void testUploadInCorrectJsonSizeFile() {
         File file = new File("src/main/resources/10mb-sample.json");
         webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(DELAY));
+
+        loginUser("admin@qa.team", "123456");
+
         assertThat(webDriver.getTitle()).isEqualTo("Technical interview questions");
 
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(UPLOAD_FILE)).sendKeys(file.getAbsolutePath());
@@ -213,6 +235,9 @@ public class SimpleUITest {
     public void testResetAllTechnicalInterviewQuestions() {
         File file = new File("src/main/resources/upload.json");
         webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(DELAY));
+
+        loginUser("admin@qa.team", "123456");
+
         assertThat(webDriver.getTitle()).isEqualTo("Technical interview questions");
 
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(UPLOAD_FILE)).sendKeys(file.getAbsolutePath());
@@ -231,6 +256,27 @@ public class SimpleUITest {
         alert.accept();
 
         assertThat(Integer.parseInt(webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(FAIL_COUNT)).getText())).isNotEqualTo(0);
+    }
+
+    @Test
+    public void testRegisterNewUser() {
+        String credential = createEmail();
+        webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(DELAY));
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(SIGN_UP)).click();
+
+
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(EMAIL)).sendKeys(credential);
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(PASSWORD)).sendKeys(credential);
+        selectDropDown(GENDER).selectByValue("Male");
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(SIGN_UP_BUTTON)).click();
+        assertTrue(webDriver.getCurrentUrl().contains("process_register"));
+    }
+
+    private void loginUser(final String username, final String password) {
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(MAIN_PAGE_LINK_QUESTIONS)).click();
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(USER_NAME)).sendKeys(username);
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(PASSWORD)).sendKeys(password);
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(SIGN_IN)).click();
     }
 
     @AfterAll
@@ -255,5 +301,13 @@ public class SimpleUITest {
 
     private List<WebElement> convertListToLocator(By locator) {
         return webDriver.findElements(locator);
+    }
+
+    private Select selectDropDown(final By locator) {
+        return new Select(webDriver.findElement(locator));
+    }
+
+    private String createEmail() {
+        return "test_" + new Date().getTime() + "@qa.team";
     }
 }
