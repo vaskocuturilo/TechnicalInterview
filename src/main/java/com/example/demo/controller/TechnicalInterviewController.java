@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.TechnicalInterviewEntity;
-import com.example.demo.entity.UserEntity;
 import com.example.demo.exception.StorageFileNotFoundException;
 import com.example.demo.repository.TechnicalInterviewRepository;
 import com.example.demo.service.OneTimePasswordService;
@@ -27,21 +26,16 @@ import java.util.UUID;
 @RequestMapping("/api/v1")
 public class TechnicalInterviewController {
     private final TechnicalInterviewService technicalInterviewService;
-    private final UserEntityService userEntityService;
     private final StorageService storageService;
     private final UploadService uploadService;
-    private final OneTimePasswordService oneTimePasswordService;
-
     @Value("${storage.error.message}")
     private String storageNotFoundErrorMessage;
 
     @Autowired
     public TechnicalInterviewController(TechnicalInterviewService technicalInterviewService, UserEntityService userEntityService, StorageService storageService, UploadService uploadService, TechnicalInterviewRepository technicalInterviewRepository, OneTimePasswordService oneTimePasswordService) {
         this.technicalInterviewService = technicalInterviewService;
-        this.userEntityService = userEntityService;
         this.storageService = storageService;
         this.uploadService = uploadService;
-        this.oneTimePasswordService = oneTimePasswordService;
     }
 
     @GetMapping("")
@@ -129,22 +123,5 @@ public class TechnicalInterviewController {
     public String resetAllCompletedTechnicalInterviewTasks() {
         technicalInterviewService.resetAllCompletedTechnicalInterviewTasks();
         return "redirect:/api/v1/questions";
-    }
-
-    @GetMapping("/register")
-    public String showRegistrationForm(Model model) {
-        model.addAttribute("user", new UserEntity());
-
-        return "signup_form";
-    }
-
-    @PostMapping("/process_register")
-    public String processRegister(@ModelAttribute UserEntity userEntity, Model model) {
-        userEntityService.registerUser(userEntity);
-        Integer oneTimePassword = oneTimePasswordService.returnOneTimePassword().getOneTimePasswordCode();
-
-        model.addAttribute("oneTimePassword", oneTimePassword);
-
-        return "register_success";
     }
 }
