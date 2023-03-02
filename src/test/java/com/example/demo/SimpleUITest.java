@@ -44,12 +44,18 @@ public class SimpleUITest {
     private static By COMPLETE_CELL = By.xpath("//table[@class='table table-striped table-bordered']//td[contains(text(),'Test complete')]/following-sibling::td//button[@id='cell_complete']");
     private static By TABLE_LIST = By.xpath("//table[@id='main_table']//tbody/tr");
     private static By MESSAGE = By.xpath("//div[@id='info_message']");
-
     private static By SIGN_UP = By.xpath("//input[@id='register_page']");
     private static By SIGN_UP_BUTTON = By.xpath("//input[@value='Sign Up']");
     private static By EMAIL = By.xpath("//input[@id='email']");
     private static By GENDER = By.xpath("//select[@id='gender']");
-
+    private static By MENU = By.xpath("//div[@id='menuToggle']");
+    private static By ABOUT_ITEM = By.xpath("//a[@id='link_about']");
+    private static By MODAL_WINDOW = By.xpath("//div[@class='modal']");
+    private static By MODAL_CLOSE = By.xpath("//button[@class='close-modal']");
+    private static By MODAL_TITLE = By.xpath("//div[@class='modal']/h1");
+    private static By MODAL_TEXT = By.xpath("//div[@class='modal']/p");
+    private static String MODAL_TITLE_TEXT = "I'm a modal window";
+    private static String MODAL_VERIFY_TEXT = "This is a modal window for a technical interview application.";
     private static final String UPLOAD_MESSAGE = "You successfully uploaded file is: %s";
     private static final String ERROR_UPLOAD_MESSAGE = "Maximum upload size of %s exceeded";
 
@@ -61,13 +67,13 @@ public class SimpleUITest {
     @BeforeEach
     public void setUpDriver() {
         ChromeOptions options = new ChromeOptions();
-//        options.addArguments("--headless");
-//        options.addArguments("--disable-gpu");
-//        options.addArguments("--window-size=1920,1200");
-//        options.addArguments("--ignore-certificate-errors");
-//        options.addArguments("--disable-extensions");
-//        options.addArguments("--no-sandbox");
-//        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--headless");
+        options.addArguments("--disable-gpu");
+        options.addArguments("--window-size=1920,1200");
+        options.addArguments("--ignore-certificate-errors");
+        options.addArguments("--disable-extensions");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
 
         webDriver = new ChromeDriver(options);
         webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(DELAY));
@@ -77,6 +83,18 @@ public class SimpleUITest {
     @Test
     public void testVerifyTitle() {
         assertThat(webDriver.getTitle()).isEqualTo("Technical interview questions");
+    }
+
+    @Test
+    public void testVerifyModalWindowOnMainPage() {
+        webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(DELAY));
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(MENU)).click();
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(ABOUT_ITEM)).click();
+
+        assertThat(webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(MODAL_WINDOW)).isDisplayed());
+        assertThat(webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(MODAL_CLOSE)).isDisplayed());
+        assertThat(webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(MODAL_TITLE)).getText()).contains(MODAL_TITLE_TEXT);
+        assertThat(webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(MODAL_TEXT)).getText()).contains(MODAL_VERIFY_TEXT);
     }
 
     @Test

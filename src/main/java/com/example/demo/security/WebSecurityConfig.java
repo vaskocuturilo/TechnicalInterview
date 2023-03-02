@@ -54,10 +54,10 @@ public class WebSecurityConfig {
                         .frameOptions().disable())
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/", "/css/*", "/js/*").permitAll()
-                        .requestMatchers("/api/v1/admin/users").hasAnyAuthority("ADMIN")
+                        .requestMatchers("/api/v1/users/all").hasAnyAuthority("ADMIN")
                         .requestMatchers("/api/v1/create").hasAnyAuthority("GUEST", "USER", "ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/api/v1/register").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/process_register").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/users/register").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/users/process_register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/questions/upload").hasAnyAuthority("USER", "ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/v1/questions/delete/all").hasAnyAuthority("USER", "ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/v1/random").hasAnyAuthority("GUEST", "USER", "ADMIN")

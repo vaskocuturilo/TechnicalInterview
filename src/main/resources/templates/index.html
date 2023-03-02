@@ -7,7 +7,6 @@
     <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet"/>
     <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript" th:src="@{/js/index.js}"></script>
 </head>
 <body>
 <div>
@@ -18,7 +17,7 @@
             <span></span>
             <span></span>
             <ul id="menu">
-                <a href="#" onclick="openModal()" th:onclick="|openModal()|">
+                <a href="#" id="link_about" th:onclick="openModal()">
                     <li>About</li>
                 </a>
             </ul>
@@ -29,13 +28,7 @@
     <button class="close-modal">&times;</button>
     <h1>I'm a modal window 😍</h1>
     <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
+        This is a modal window for a technical interview application.
     </p>
 </div>
 <div class="overlay hidden"></div>
@@ -58,7 +51,7 @@
     </fieldset>
 </div>
 <div class="form-style-5">
-    <form action="/api/v1/register" method="GET">
+    <form action="/api/v1/users/register" method="GET">
         <fieldset>
             <legend><span class="number">3.</span>Sign-Up</legend>
             <div style="display: inline-block; margin-left:15px">
@@ -75,5 +68,6 @@
         </div>
     </fieldset>
 </div>
+<script type="text/javascript" th:src="@{/js/index.js}"></script>
 </body>
 </html>
