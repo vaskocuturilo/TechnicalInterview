@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.entity.RoleEntity;
 import com.example.demo.entity.UserEntity;
+import com.example.demo.exception.QuestionNotFoundException;
 import com.example.demo.exception.UserFoundException;
 import com.example.demo.repository.RolesRepository;
 import com.example.demo.repository.UserRepository;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Log4j2
@@ -54,5 +56,28 @@ public class UserEntityService {
     @Transactional
     public void setActiveStatus(Long id) {
         userEntityRepository.setActiveStatus(id);
+    }
+
+    public Optional<UserEntity> editUser(Long id) {
+        Optional<UserEntity> userEntity = userEntityRepository.findById(id);
+        userEntity
+                .stream()
+                .filter(question -> question.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> {
+                    QuestionNotFoundException questionNotFoundException = new QuestionNotFoundException(infoMessage);
+                    log.debug("The question with id = " + id + " not found." + questionNotFoundException.getMessage());
+                    return questionNotFoundException;
+                });
+
+        return userEntity;
+    }
+
+    public void saveUser(UserEntity userEntity) {
+        userEntityRepository.save(userEntity);
+    }
+
+    public void deleteUser(Long id) {
+        userEntityRepository.deleteById(id);
     }
 }

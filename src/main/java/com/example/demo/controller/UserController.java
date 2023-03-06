@@ -9,10 +9,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @Log4j2
-@RequestMapping("/api/v1/users")
+@RequestMapping("/api/v1")
 public class UserController {
     private final UserEntityService userEntityService;
 
@@ -23,7 +24,7 @@ public class UserController {
         this.oneTimePasswordService = oneTimePasswordService;
     }
 
-    @GetMapping("/all")
+    @GetMapping("/users/all")
     public String getAllTechnicalInterviewTasks(Model model) {
         List<UserEntity> userList = userEntityService.getAllUsers();
 
@@ -32,26 +33,48 @@ public class UserController {
         return "admin";
     }
 
-    @GetMapping("/active/{id}")
+    @PostMapping("/users/active/{id}")
     public String activateNewUser(@PathVariable Long id) {
         userEntityService.setActiveStatus(id);
 
-        return "redirect:/api/v1/admin/users";
+        return "redirect:/api/v1/users/all";
     }
 
-    @GetMapping("/approve/{otp}")
+    @GetMapping("/users/approve/{otp}")
     public String approveUser() {
         return "main";
     }
 
-    @GetMapping("/register")
+    @GetMapping("/users/register")
     public String showRegistrationForm(Model model) {
         model.addAttribute("user", new UserEntity());
 
         return "signup_form";
     }
 
-    @PostMapping("/process_register")
+    @PostMapping(value = "/users/{id}/edit")
+    public String editUser(@PathVariable Long id, Model model) {
+        Optional<UserEntity> userEntity = userEntityService.editUser(id);
+        model.addAttribute("userEntity", userEntity);
+
+        return "edit_user";
+    }
+
+    @PostMapping(value = "/users")
+    public String addNewTechnicalInterviewTask(@ModelAttribute UserEntity userEntity) {
+        userEntityService.saveUser(userEntity);
+
+        return "redirect:/api/v1/users/all";
+    }
+
+    @PostMapping(value = "/users/{id}/delete")
+    public String deleteUser(@PathVariable Long id) {
+        userEntityService.deleteUser(id);
+
+        return "redirect:/api/v1/users/all";
+    }
+
+    @PostMapping("/users/process_register")
     public String processRegister(@ModelAttribute UserEntity userEntity, Model model) {
         userEntityService.registerUser(userEntity);
         Integer oneTimePassword = oneTimePasswordService.returnOneTimePassword().getOneTimePasswordCode();

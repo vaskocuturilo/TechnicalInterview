@@ -74,7 +74,7 @@ public class TechnicalInterviewController {
         Optional<TechnicalInterviewEntity> technicalInterview = technicalInterviewService.editTechnicalInterviewTask(id);
         model.addAttribute("technicalInterview", technicalInterview);
 
-        return "edit";
+        return "edit_question";
     }
 
     @PostMapping(value = "/questions/{id}/delete")
