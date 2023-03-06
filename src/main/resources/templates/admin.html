@@ -38,6 +38,8 @@
                         <td>Roles</td>
                         <td>Active</td>
                         <td>Do you want to active?</td>
+                        <td>Do you want to Edit?</td>
+                        <td>Do you want to Delete?</td>
                     </tr>
                     </thead>
                     <tbody>
@@ -46,7 +48,24 @@
                         <td th:text="${user.getGender()}"></td>
                         <td th:text="${user.getRoles()}"></td>
                         <td th:text="${user.isActive()}"></td>
-                        <td><a th:href="@{/api/v1/admin/active/__${user.getId()}__}">Active</a></td>
+                        <td>
+                            <form action="#" th:action="@{/api/v1/users/active/__${user.getId()}__}"
+                                  method="POST">
+                                <button class="btn btn-primary">Active</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="#" th:action="@{/api/v1/users/__${user.getId()}__/edit}"
+                                  method="post">
+                                <button class="btn btn-primary">Edit</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="#" th:action="@{/api/v1/users/__${user.getId()}__/delete}"
+                                  method="post">
+                                <button class="btn btn-primary">Delete</button>
+                            </form>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
