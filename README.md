@@ -69,10 +69,9 @@ You will need the following technologies available to try it out:
 
 ### Ho w to run.
 
-``` ```
+``` gradle build```
 
+## Swagger-ui:
+http://localhost:8080/swagger-ui/index.html
 ![]()
 
-![]()
-
-![]()
