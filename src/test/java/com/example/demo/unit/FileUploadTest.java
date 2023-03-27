@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.unit;
 
 import com.example.demo.storage.StorageService;
 import org.junit.jupiter.api.Test;

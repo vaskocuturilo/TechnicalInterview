@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.api;
 
 import com.example.demo.model.health.Health;
 import com.example.demo.model.info.Info;
