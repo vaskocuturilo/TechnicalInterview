@@ -37,7 +37,7 @@ You will need the following technologies available to try it out:
 - Add functionality for generate one time password.
 - Add functionality for displaying a one-time password for each user.
 - Add login/register pages.
-- Add iOS app for this service.
+- Add functionality for subscribing/unsubscribing.
 - Add functionality for the upload questions from TXT/YAML/XLSX file. :heavy_check_mark:
 - Add functionality for delete all questions from table. :heavy_check_mark:
 - Add functionality for reset all questions. :heavy_check_mark:
