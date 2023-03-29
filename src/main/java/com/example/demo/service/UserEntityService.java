@@ -18,6 +18,7 @@ import java.util.Set;
 
 @Log4j2
 @Service
+@Transactional
 public class UserEntityService {
 
     private final UserRepository userEntityRepository;
@@ -31,7 +32,6 @@ public class UserEntityService {
         this.rolesRepository = rolesRepository;
     }
 
-    @Transactional
     public void registerUser(final UserEntity userEntity) {
         UserEntity user = userEntityRepository.findByEmail(userEntity.getEmail());
         RoleEntity role = new RoleEntity();
@@ -53,7 +53,6 @@ public class UserEntityService {
         return userEntityRepository.findAll();
     }
 
-    @Transactional
     public void setActiveStatus(Long id) {
         userEntityRepository.setActiveStatus(id);
     }

@@ -7,13 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class OneTimePasswordService {
 
     private final Long expiryInterval = 5L * 60 * 1000;
 
-    OneTimePasswordRepository oneTimePasswordRepository;
+    private final OneTimePasswordRepository oneTimePasswordRepository;
 
     OneTimePasswordHelpService oneTimePasswordHelpService;
 
@@ -31,5 +32,9 @@ public class OneTimePasswordService {
         oneTimePasswordRepository.save(oneTimePassword);
 
         return oneTimePassword;
+    }
+
+    public List<OneTimePasswordEntity> getAllOneTimePasswords(){
+        return oneTimePasswordRepository.findAll();
     }
 }
