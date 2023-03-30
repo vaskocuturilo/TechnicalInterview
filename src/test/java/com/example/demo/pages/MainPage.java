@@ -10,6 +10,8 @@ public class MainPage {
     private static By LIST_QUESTIONS_BUTTON = By.xpath("//input[@id='list_of_questions']");
     private static By LOGIN_BUTTON = By.xpath("//input[@id='login_page']");
 
+    private static By SIGN_UP = By.xpath("//input[@id='register_page']");
+
     public LoginPage openListOfQuestionsPage() {
         WaitCondition waitCondition = new WaitCondition();
         waitCondition.waitForVisibilityOfElementLocatedBy(LIST_QUESTIONS_BUTTON).click();
@@ -25,6 +27,9 @@ public class MainPage {
     }
 
     public RegisterPage openRegisterPage() {
+        WaitCondition waitCondition = new WaitCondition();
+        waitCondition.waitForVisibilityOfElementLocatedBy(SIGN_UP).click();
+
         return new RegisterPage();
     }
 

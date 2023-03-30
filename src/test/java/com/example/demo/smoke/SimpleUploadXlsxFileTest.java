@@ -7,20 +7,22 @@ import jdk.jfr.Description;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class SimpleAddNewQuestionTest extends BaseClass {
+import java.io.File;
 
-    final String title = "Add new Question";
+public class SimpleUploadXlsxFileTest extends BaseClass {
+    File file = new File("src/main/resources/upload.xlsx");
 
-    @Description("This is simple automation script for add a new question.")
-    @DisplayName("Simple add question automation script.")
+    @Description("This is simple automation script for upload xlsx file.")
+    @DisplayName("Simple upload xlsx automation script.")
     @Test
-    public void testSimpleAddNewQuestion() {
+    public void testSimpleResetQuestion() {
         new MainPage()
                 .openListOfQuestionsPage()
                 .enterCredentialUser(
                         new UserCredential(
                                 "admin@qa.team",
                                 "123456")
-                ).addNewQuestion(title);
+                ).uploadQuestionsFromFile(file)
+                .verifyUploadQuestionsFile();
     }
 }
