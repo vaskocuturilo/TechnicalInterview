@@ -7,20 +7,21 @@ import jdk.jfr.Description;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class SimpleAddNewQuestionTest extends BaseClass {
+public class SimpleDeleteQuestionTest extends BaseClass {
 
-    final String title = "Add new Question";
+    final String title = "Question for delete";
 
-    @Description("This is simple automation script for add a new question.")
-    @DisplayName("Simple add question automation script.")
+    @Description("This is simple automation script for delete a new question.")
+    @DisplayName("Simple delete a new question automation script.")
     @Test
-    public void testSimpleAddNewQuestion() {
+    public void testSimpleDeleteQuestion() {
         new MainPage()
                 .openListOfQuestionsPage()
                 .enterCredentialUser(
                         new UserCredential(
                                 "admin@qa.team",
                                 "123456")
-                ).addNewQuestion(title);
+                ).addNewQuestion(title)
+                .tapDeleteQuestionButton();
     }
 }
