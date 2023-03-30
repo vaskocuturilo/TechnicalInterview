@@ -1,5 +1,6 @@
 package com.example.demo.events;
 
+import com.example.demo.entity.OneTimePasswordEntity;
 import com.example.demo.entity.RoleEntity;
 import com.example.demo.entity.UserEntity;
 import com.example.demo.repository.UserRepository;
@@ -36,8 +37,10 @@ public class ApplicationEvents {
         HashSet<RoleEntity> guestPermission = new HashSet<>();
         guestPermission.add(guestRole);
 
-        userRepository.save(new UserEntity(1L, "admin@qa.team", passwordEncoder.encode("123456"), "Male", true, adminPermission));
-        userRepository.save(new UserEntity(2L, "guest", passwordEncoder.encode("guest"), "Male", true, guestPermission));
+        OneTimePasswordEntity oneTimePassword = new OneTimePasswordEntity();
+        oneTimePassword.setOneTimePasswordCode(123456);
 
+        userRepository.save(new UserEntity(1L, "admin@qa.team", passwordEncoder.encode("123456"), "Male", true, adminPermission, oneTimePassword));
+        userRepository.save(new UserEntity(2L, "guest", passwordEncoder.encode("guest"), "Male", true, guestPermission, oneTimePassword));
     }
 }
