@@ -25,11 +25,24 @@
     </nav>
 </div>
 <div class="modal hidden">
-    <button class="close-modal">&times;</button>
-    <h1>I'm a modal window 😍</h1>
-    <p>
-        This is a modal window for a technical interview application.
-    </p>
+    <form action="/api/v1/subscribes" method="POST">
+        <button class="close-modal">&times;</button>
+        <h1>I'm a modal window 😍</h1>
+        <p>
+            This is a modal window for a technical interview application.
+        </p>
+        <div>
+            <p>
+                This is input filed for subscribe.
+            </p>
+            <input type="text" name="email" id="email" minlength="1"
+                   maxlength="25" placeholder="email for subscribe"
+                   pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$" required/>
+            <br>
+            <input type="submit" value="Subscribe">
+        </div>
+    </form>
+</div>
 </div>
 <div class="overlay hidden"></div>
 <div class="form-style-5">
