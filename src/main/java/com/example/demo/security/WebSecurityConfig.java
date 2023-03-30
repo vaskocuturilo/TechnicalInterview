@@ -56,6 +56,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/", "/css/*", "/js/*").permitAll()
                         .requestMatchers("/api/v1/users/all").hasAnyAuthority("ADMIN")
                         .requestMatchers("/api/v1/create").hasAnyAuthority("GUEST", "USER", "ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/subscribes").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/users/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/users/process_register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/questions/upload").hasAnyAuthority("USER", "ADMIN")
