@@ -6,7 +6,6 @@ import org.openqa.selenium.By;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-
 public class SuccessRegisterPage {
 
     private static By ONE_TIME_PASSWORD_TEXT = By.xpath("//div/p");

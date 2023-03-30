@@ -40,9 +40,10 @@ public class UserController {
         return "redirect:/api/v1/users/all";
     }
 
-    @GetMapping("/users/approve/{otp}")
-    public String approveUser() {
-        return "main";
+    @PutMapping("/users/approve/{userId}")
+    public String approveUser(@PathVariable Long userId, @RequestParam Integer code) {
+        userEntityService.approveUser(userId, code);
+        return "success";
     }
 
     @GetMapping("/users/register")
@@ -62,6 +63,7 @@ public class UserController {
 
     @PostMapping(value = "/users")
     public String addNewTechnicalInterviewTask(@ModelAttribute UserEntity userEntity) {
+
         userEntityService.saveUser(userEntity);
 
         return "redirect:/api/v1/users/all";
@@ -77,7 +79,8 @@ public class UserController {
     @PostMapping("/users/process_register")
     public String processRegister(@ModelAttribute UserEntity userEntity, Model model) {
         userEntityService.registerUser(userEntity);
-        Integer oneTimePassword = oneTimePasswordService.returnOneTimePassword().getOneTimePasswordCode();
+
+        Integer oneTimePassword = oneTimePasswordService.returnOneTimePassword(userEntity.getId()).getOneTimePasswordCode();
 
         model.addAttribute("oneTimePassword", oneTimePassword);
 
